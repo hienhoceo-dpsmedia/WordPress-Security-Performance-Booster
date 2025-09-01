@@ -13,14 +13,19 @@
 
 /*
 Plugin Name: WordPress Security & Performance Booster
-Description: Comprehensive security and performance enhancement plugin that disables updates, prevents spam (comments, pingbacks, trackbacks, XML-RPC), reduces server load, and cleans notification spam.
-Plugin URI:  https://dps.media/
-Version:     2.0.0
+Description: Comprehensive security and performance enhancement plugin that disables updates, prevents spam (comments, pingbacks, trackbacks, XML-RPC), reduces server load, and cleans notification spam. Perfect for expert users and development environments.
+Plugin URI:  https://gitlab.com/hienho.ceo-dpsmedia/wordpress-security-and-performance-booster
+Version:     1.0.0
 Author:      HỒ QUANG HIỂN
 Author URI:  https://dps.media/
 Text Domain: wp-security-performance-booster
 Domain Path: /languages
-License:	 GPL2
+Requires at least: 4.0
+Tested up to: 6.8
+Requires PHP: 7.4
+Network: false
+License:     GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Developer: HỒ QUANG HIỂN
 Company: DPS.MEDIA
@@ -45,84 +50,161 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+// Prevent direct access
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 
 
 /**
  * Define the plugin version
  */
-const WPSPB_VERSION = "2.0.0";
+if ( ! defined( 'WPSPB_VERSION' ) ) {
+	define( 'WPSPB_VERSION', '1.0.0' );
+}
+
+/**
+ * Define plugin path
+ */
+if ( ! defined( 'WPSPB_PLUGIN_PATH' ) ) {
+	define( 'WPSPB_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+}
+
+/**
+ * Define plugin URL
+ */
+if ( ! defined( 'WPSPB_PLUGIN_URL' ) ) {
+	define( 'WPSPB_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+}
 
 
 /**
+ * Main Plugin Class
+ *
  * The WP_Security_Performance_Booster class
  *
- * @package 	WordPress_Plugins
- * @subpackage 	WP_Security_Performance_Booster
- * @since 		1.0
- * @author 		hello@dps.media
+ * @package WordPress_Security_Performance_Booster
+ * @since   1.0.0
+ * @author  HỒ QUANG HIỂN <hello@dps.media>
  */
 class WP_Security_Performance_Booster {
+	
+	/**
+	 * Plugin instance
+	 *
+	 * @var WP_Security_Performance_Booster
+	 * @since 1.0.0
+	 */
+	private static $instance = null;
+	
+	/**
+	 * Get plugin instance
+	 *
+	 * @since 1.0.0
+	 * @return WP_Security_Performance_Booster
+	 */
+	public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+	
 	/**
 	 * The WP_Security_Performance_Booster class constructor
 	 * initializing required stuff for the plugin
 	 *
-	 * PHP 5 Constructor
-	 *
-	 * @since 		1.0
-	 * @author 		hello@dps.media
+	 * @since 1.0.0
+	 * @author HỒ QUANG HIỂN <hello@dps.media>
 	 */
-	function __construct() {
-		add_action( 'admin_init', array(&$this, 'admin_init') );
-		add_action( 'admin_menu', array(&$this, 'add_admin_menu') );
-		add_action( 'admin_enqueue_scripts', array(&$this, 'enqueue_admin_assets') );
-		add_action( 'plugins_loaded', array(&$this, 'load_textdomain') );
-
+	private function __construct() {
+		add_action( 'init', array( $this, 'init' ) );
+		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+		
+		// Plugin activation/deactivation hooks
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+	}
+	
+	/**
+	 * Initialize plugin
+	 *
+	 * @since 1.0.0
+	 */
+	public function init() {
 		// Initialize features based on settings
 		$this->init_features_conditionally();
 	}
 
 	/**
+	 * Plugin activation
+	 *
+	 * @since 1.0.0
+	 */
+	public function activate() {
+		// Set default options
+		$default_settings = $this->get_default_settings();
+		add_option( 'wpspb_settings', $default_settings );
+		add_option( 'wpspb_version', WPSPB_VERSION );
+	}
+
+	/**
+	 * Plugin deactivation
+	 *
+	 * @since 1.0.0
+	 */
+	public function deactivate() {
+		// Clear any cached transients
+		delete_transient( 'wpspb_cache' );
+	}
+
+	/**
 	 * Initialize features based on user settings
 	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
 	 */
 	private function init_features_conditionally() {
-		$settings = get_option('wpspb_settings', $this->get_default_settings());
+		$settings = get_option( 'wpspb_settings', $this->get_default_settings() );
 		
-		if ($settings['disable_updates']) {
+		if ( isset( $settings['disable_updates'] ) && $settings['disable_updates'] ) {
 			$this->init_update_blocking_features();
 		}
 		
-		if ($settings['disable_comments']) {
+		if ( isset( $settings['disable_comments'] ) && $settings['disable_comments'] ) {
 			$this->init_anti_spam_features();
 		}
 		
-		if ($settings['disable_xmlrpc']) {
+		if ( isset( $settings['disable_xmlrpc'] ) && $settings['disable_xmlrpc'] ) {
 			add_filter( 'xmlrpc_enabled', '__return_false' );
 		}
 		
-		if ($settings['hide_notifications']) {
+		if ( isset( $settings['hide_notifications'] ) && $settings['hide_notifications'] ) {
 			$this->init_notification_cleaning();
 		}
 		
-		if ($settings['clean_dashboard']) {
-			add_action( 'wp_dashboard_setup', array($this, 'remove_dashboard_widgets') );
+		if ( isset( $settings['clean_dashboard'] ) && $settings['clean_dashboard'] ) {
+			add_action( 'wp_dashboard_setup', array( $this, 'remove_dashboard_widgets' ) );
 		}
 	}
 
 	/**
 	 * Get default settings
 	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
+	 * @return array Default plugin settings
 	 */
 	private function get_default_settings() {
 		return array(
-			'disable_updates' => true,
-			'disable_comments' => true,
-			'disable_xmlrpc' => true,
+			'disable_updates'    => true,
+			'disable_comments'   => true,
+			'disable_xmlrpc'     => true,
 			'hide_notifications' => true,
-			'disable_pingbacks' => true,
-			'clean_dashboard' => true
+			'disable_pingbacks'  => true,
+			'clean_dashboard'    => true,
 		);
 	}
 
@@ -317,22 +399,29 @@ class WP_Security_Performance_Booster {
 	}
 
 
-	function admin_init() {
-		if ( !function_exists("remove_action") ) return;
+	/**
+	 * Admin initialization
+	 *
+	 * @since 1.0.0
+	 */
+	public function admin_init() {
+		if ( ! function_exists( 'remove_action' ) ) {
+			return;
+		}
 
 		// Register settings
-		register_setting('wpspb_settings', 'wpspb_settings');
+		register_setting( 'wpspb_settings', 'wpspb_settings', array( $this, 'sanitize_settings' ) );
 
 		if ( current_user_can( 'update_core' ) ) {
-			add_action( 'admin_bar_menu', [$this, 'add_adminbar_items'], 100 );
-			add_action( 'admin_enqueue_scripts', [$this, 'admin_css_overrides'] );
+			add_action( 'admin_bar_menu', array( $this, 'add_adminbar_items' ), 100 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_css_overrides' ) );
 		}
 		
 		// Get current settings
-		$settings = get_option('wpspb_settings', $this->get_default_settings());
+		$settings = get_option( 'wpspb_settings', $this->get_default_settings() );
 		
 		// Apply settings-based functionality
-		if ($settings['disable_updates']) {
+		if ( isset( $settings['disable_updates'] ) && $settings['disable_updates'] ) {
 			/*
 			 * Remove 'update plugins' option from bulk operations select list
 			 */
@@ -342,7 +431,7 @@ class WP_Security_Performance_Booster {
 			/*
 			 * Hide maintenance and update nag
 			 */
-			add_filter( 'site_status_tests', [$this, 'site_status_tests'] );
+			add_filter( 'site_status_tests', array( $this, 'site_status_tests' ) );
 			remove_action( 'admin_notices', 'update_nag', 3 );
 			remove_action( 'network_admin_notices', 'update_nag', 3 );
 			remove_action( 'admin_notices', 'maintenance_nag' );
@@ -405,6 +494,24 @@ class WP_Security_Performance_Booster {
 			
 			remove_all_filters( 'plugins_api' );
 		}
+	}
+
+	/**
+	 * Sanitize settings
+	 *
+	 * @since 1.0.0
+	 * @param array $input Raw input data
+	 * @return array Sanitized data
+	 */
+	public function sanitize_settings( $input ) {
+		$sanitized = array();
+		
+		$defaults = $this->get_default_settings();
+		foreach ( $defaults as $key => $default_value ) {
+			$sanitized[ $key ] = isset( $input[ $key ] ) ? (bool) $input[ $key ] : false;
+		}
+		
+		return $sanitized;
 	}
 
 
@@ -709,7 +816,7 @@ class WP_Security_Performance_Booster {
 					<p class="wpspb-tagline"><?php echo __('by', 'wp-security-performance-booster'); ?> <strong>DPS.MEDIA</strong></p>
 				</div>
 				<div class="wpspb-version">
-					<span class="version-badge">v2.0.0</span>
+					<span class="version-badge">v1.0.0</span>
 				</div>
 			</div>
 			
@@ -1077,6 +1184,12 @@ class WP_Security_Performance_Booster {
 	}
 }
 
-if ( class_exists('WP_Security_Performance_Booster') ) {
-	$WP_Security_Performance_Booster = new WP_Security_Performance_Booster();
+/**
+ * Initialize the plugin
+ *
+ * @since 1.0.0
+ */
+function wpspb_init() {
+	WP_Security_Performance_Booster::get_instance();
 }
+add_action( 'plugins_loaded', 'wpspb_init' );

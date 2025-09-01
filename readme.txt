@@ -1,11 +1,11 @@
 === WordPress Security & Performance Booster ===
 Contributors: dpsmedia
 Donate link: https://dps.media/donate/
-Tags: disable updates, security, anti-spam, performance, xmlrpc, comments, pingback, notifications
+Tags: security, performance, disable-updates, anti-spam, xmlrpc, comments, pingback, notifications
 Requires at least: 4.0
-Tested up to: 6.8.99
+Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: trunk
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,12 @@ WordPress Security & Performance Booster is a comprehensive plugin designed for 
 **⚠️ Important Security Notice:**
 This plugin is designed for expert users who understand the implications of disabling updates. You must manually monitor and apply security updates. Never use this on production sites without proper security monitoring.
 
+**🌍 Multi-Language Support:**
+* English (default)
+* Vietnamese (Tiếng Việt)
+* German (Deutsch) 
+* French (Français)
+
 **📧 Support & Contact**
 Developer: HỒ QUANG HIỂN
 Company: DPS.MEDIA
@@ -56,19 +62,29 @@ Email: hello@dps.media
 Website: dps.media
 Support: dps.media/support
 
+== Installation ==
+
+1. Upload the plugin files to the `/wp-content/plugins/wp-security-performance-booster` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Go to Settings > Security Booster to configure the plugin features.
+
+**What happens after activation:**
+* All WordPress updates are immediately disabled
+* Comments, pingbacks, and trackbacks are blocked
+* XML-RPC is disabled for security
+* Admin notification spam is hidden
+* A green shield icon appears in your admin bar
+* Server load is reduced through optimized performance
+
+**To temporarily check for updates:**
+Simply deactivate the plugin, check for updates, apply them if needed, then reactivate the plugin.
+
+**Note for Expert Users:**
+This plugin provides comprehensive protection but requires manual update management. Ensure you have proper security monitoring in place.
 
 == Frequently Asked Questions ==
 
-= What features does this plugin provide? =
-
-The plugin provides comprehensive security and performance enhancements:
-* Disables all WordPress updates (core, plugins, themes)
-* Blocks spam comments, pingbacks, and trackbacks
-* Disables XML-RPC for security
-* Hides admin notification spam
-* Reduces server load and improves performance
-
-= Is this safe for production websites? =
+= Is this plugin safe for production websites? =
 
 This plugin is designed for expert users who understand the security implications. It's perfect for:
 * Development and staging environments
@@ -90,57 +106,53 @@ No, actually the opposite! It reduces server load by eliminating:
 
 = Can I customize which features to enable? =
 
-Currently, all features are enabled by default for maximum security and performance. Future versions may include selective feature control.
+Yes! The plugin includes a modern settings page where you can selectively enable/disable:
+* Update blocking
+* Comment protection
+* XML-RPC blocking
+* Notification hiding
+* Dashboard cleaning
 
 = How do I know the plugin is working? =
 
 You'll see a green shield icon in your admin bar when the plugin is active, indicating all security and performance features are enabled.
 
+= Does this plugin support multiple languages? =
 
-== Installation ==
+Yes! The plugin includes full support for:
+* English (default)
+* Vietnamese (Tiếng Việt)
+* German (Deutsch)
+* French (Français)
 
-1. Download the plugin and unzip it.
-2. Upload the folder wp-security-performance-booster/ to your /wp-content/plugins/ folder.
-3. Activate the plugin from your WordPress admin panel.
-4. Installation finished.
-
-**What happens after activation:**
-* All WordPress updates are immediately disabled
-* Comments, pingbacks, and trackbacks are blocked
-* XML-RPC is disabled for security
-* Admin notification spam is hidden
-* A green shield icon appears in your admin bar
-* Server load is reduced through optimized performance
-
-**To temporarily check for updates:**
-Simply deactivate the plugin, check for updates, apply them if needed, then reactivate the plugin.
-
-**Note for Expert Users:**
-This plugin provides comprehensive protection but requires manual update management. Ensure you have proper security monitoring in place.
-
+You can switch languages in the plugin settings page.
 
 == Screenshots ==
 
-1. Green shield icon in admin bar indicating active protection
-2. Clean admin interface with hidden notification spam
-3. Disabled comments section (no comment forms or admin menus)
+1. Modern admin settings page with selective feature control
+2. Green shield icon in admin bar indicating active protection
+3. Clean admin interface with hidden notification spam
+4. Language switcher supporting multiple languages
 
 == Changelog ==
 
-= 2.0.0 =
-* **MAJOR UPDATE - COMPLETE REWRITE**
-* NEW: Comprehensive anti-spam protection (comments, pingbacks, trackbacks)
-* NEW: XML-RPC security blocking
-* NEW: Advanced notification spam cleaning
-* NEW: Enhanced performance optimization
-* NEW: Updated branding and developer information
-* IMPROVED: Better admin bar notification with shield icon
-* IMPROVED: Modular code structure for better maintainability
-* IMPROVED: Enhanced security features for expert users
-* CHANGED: Plugin name to "WordPress Security & Performance Booster"
-* CHANGED: Developer to HỒ QUANG HIỂN / DPS.MEDIA
+= 1.0.0 =
+* Initial release
+* Comprehensive update blocking functionality
+* Anti-spam protection (comments, pingbacks, trackbacks)
+* XML-RPC security blocking
+* Advanced notification spam cleaning
+* Enhanced performance optimization
+* Modern admin settings page with selective feature control
+* Multi-language support (English, Vietnamese, German, French)
+* Professional DPS.MEDIA branding
+* WordPress 6.8 compatibility
+* PHP 7.4+ compatibility
 
-= Previous Versions (1.0-1.8.0) =
+== Upgrade Notice ==
+
+= 1.0.0 =
+Initial release of WordPress Security & Performance Booster. Provides comprehensive security and performance enhancements for expert WordPress users.
 * Legacy update blocking functionality
 * WordPress 6.7 compatibility
 * Performance improvements
