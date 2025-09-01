@@ -1,0 +1,147 @@
+# Vietnamese translation for WordPress Security & Performance Booster
+# Copyright (C) 2024 HỒ QUANG HIỂN
+# This file is distributed under the same license as the plugin.
+# HỒ QUANG HIỂN <hello@dps.media>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Security & Performance Booster 2.0.0\n"
+"Report-Msgid-Bugs-To: hello@dps.media\n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: HỒ QUANG HIỂN <hello@dps.media>\n"
+"Language-Team: Vietnamese\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0\n"
+
+#: wp-security-performance-booster.php:404
+msgid "Security & Performance Booster is active: Updates disabled, spam blocked, notifications hidden!"
+msgstr "Tăng cường Bảo mật & Hiệu suất đang hoạt động: Vô hiệu hóa cập nhật, chặn spam, ẩn thông báo!"
+
+#: wp-security-performance-booster.php:658
+msgid "Settings saved successfully!"
+msgstr "Cài đặt đã được lưu thành công!"
+
+#: wp-security-performance-booster.php:667
+msgid "Security & Performance Booster"
+msgstr "Tăng cường Bảo mật & Hiệu suất"
+
+#: wp-security-performance-booster.php:668
+msgid "by"
+msgstr "bởi"
+
+#: wp-security-performance-booster.php:677
+msgid "Language / Ngôn ngữ"
+msgstr "Language / Ngôn ngữ"
+
+#: wp-security-performance-booster.php:687
+msgid "Update Control"
+msgstr "Kiểm soát Cập nhật"
+
+#: wp-security-performance-booster.php:688
+msgid "Manage WordPress automatic updates and notifications"
+msgstr "Quản lý cập nhật tự động và thông báo của WordPress"
+
+#: wp-security-performance-booster.php:693
+msgid "Disable WordPress Updates"
+msgstr "Vô hiệu hóa Cập nhật WordPress"
+
+#: wp-security-performance-booster.php:696
+msgid "Blocks all WordPress core, plugin, and theme update checks. Reduces server load and prevents automatic updates."
+msgstr "Chặn tất cả kiểm tra cập nhật lõi WordPress, plugin và giao diện. Giảm tải máy chủ và ngăn cập nhật tự động."
+
+#: wp-security-performance-booster.php:700
+msgid "Comment Protection"
+msgstr "Bảo vệ Bình luận"
+
+#: wp-security-performance-booster.php:701
+msgid "Block spam comments and related features"
+msgstr "Chặn bình luận spam và các tính năng liên quan"
+
+#: wp-security-performance-booster.php:706
+msgid "Disable Comments"
+msgstr "Vô hiệu hóa Bình luận"
+
+#: wp-security-performance-booster.php:709
+msgid "Completely disables comments across all post types. Removes comment forms, admin menus, and feeds."
+msgstr "Hoàn toàn vô hiệu hóa bình luận trên tất cả loại bài viết. Xóa form bình luận, menu quản trị và feeds."
+
+#: wp-security-performance-booster.php:714
+msgid "Block Pingbacks & Trackbacks"
+msgstr "Chặn Pingback & Trackback"
+
+#: wp-security-performance-booster.php:717
+msgid "Prevents pingback and trackback spam. Removes related headers and methods."
+msgstr "Ngăn chặn spam pingback và trackback. Xóa các header và phương thức liên quan."
+
+#: wp-security-performance-booster.php:722
+msgid "Security Enhancement"
+msgstr "Tăng cường Bảo mật"
+
+#: wp-security-performance-booster.php:723
+msgid "Advanced security features and attack prevention"
+msgstr "Tính năng bảo mật nâng cao và phòng chống tấn công"
+
+#: wp-security-performance-booster.php:728
+msgid "Disable XML-RPC"
+msgstr "Vô hiệu hóa XML-RPC"
+
+#: wp-security-performance-booster.php:731
+msgid "Blocks XML-RPC functionality to prevent brute force attacks and unauthorized access attempts."
+msgstr "Chặn chức năng XML-RPC để ngăn chặn tấn công brute force và truy cập trái phép."
+
+#: wp-security-performance-booster.php:736
+msgid "Interface Cleanup"
+msgstr "Dọn dẹp Giao diện"
+
+#: wp-security-performance-booster.php:737
+msgid "Clean and optimize admin interface"
+msgstr "Dọn dẹp và tối ưu giao diện quản trị"
+
+#: wp-security-performance-booster.php:742
+msgid "Hide Admin Notifications"
+msgstr "Ẩn Thông báo Quản trị"
+
+#: wp-security-performance-booster.php:745
+msgid "Removes plugin/theme promotional notifications and admin notices. Creates a cleaner interface."
+msgstr "Xóa thông báo quảng cáo plugin/giao diện và thông báo quản trị. Tạo giao diện sạch sẽ hơn."
+
+#: wp-security-performance-booster.php:750
+msgid "Clean Dashboard"
+msgstr "Dọn dẹp Bảng điều khiển"
+
+#: wp-security-performance-booster.php:753
+msgid "Removes unnecessary dashboard widgets like WordPress news, quick draft, and activity feeds."
+msgstr "Xóa các widget không cần thiết như tin tức WordPress, bản thảo nhanh và nguồn cấp hoạt động."
+
+#: wp-security-performance-booster.php:759
+msgid "Save Settings"
+msgstr "Lưu Cài đặt"
+
+#: wp-security-performance-booster.php:763
+msgid "Support & Contact"
+msgstr "Hỗ trợ & Liên hệ"
+
+#: wp-security-performance-booster.php:764
+msgid "Developer:"
+msgstr "Nhà phát triển:"
+
+#: wp-security-performance-booster.php:765
+msgid "Company:"
+msgstr "Công ty:"
+
+#: wp-security-performance-booster.php:766
+msgid "Email:"
+msgstr "Email:"
+
+#: wp-security-performance-booster.php:767
+msgid "Website:"
+msgstr "Website:"
+
+#: wp-security-performance-booster.php:768
+msgid "Support:"
+msgstr "Hỗ trợ:"
