@@ -1,9 +1,9 @@
 # WordPress Security & Performance Booster
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster/releases)
-[![WordPress](https://img.shields.io/badge/WordPress-4.0+-blue.svg)](https://wordpress.org)
-[![PHP](https://img.shields.io/badge/PHP-7.4+-purple.svg)](https://php.net)
-[![License](https://img.shields.io/badge/license-GPL%20v2-green.svg)](LICENSE)
+[](https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster/releases)
+[](https://wordpress.org)
+[](https://php.net)
+[](LICENSE)
 
 A comprehensive WordPress plugin that enhances security and performance by disabling updates, preventing spam, and cleaning the admin interface.
 
@@ -60,18 +60,9 @@ git clone https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-B
 
 ## Screenshots
 
-### Modern Admin Interface
-![Admin Interface](assets/screenshot-1.png)
-*Modern, flat-designed settings page with DPS.MEDIA branding*
-
-### Feature Control
-![Feature Controls](assets/screenshot-2.png)
-*Selective feature control with toggle switches and descriptions*
-
-### Language Support
-![Language Switcher](assets/screenshot-3.png)
-*Multi-language support with easy language switching*
-
+- Modern admin interface (image removed)
+- Feature controls (image removed)
+- Language support (image removed)
 ## Configuration
 
 Navigate to **WordPress Admin → Settings → Security Booster** to access the plugin settings.
@@ -228,8 +219,8 @@ the Free Software Foundation; either version 2 of the License, or
 
 **Made by [DPS.MEDIA](https://dps.media)**
 
-[![Website](https://img.shields.io/badge/Website-dps.media-blue)](https://dps.media)
-[![Email](https://img.shields.io/badge/Email-hello%40dps.media-red)](mailto:hello@dps.media)
-[![Support](https://img.shields.io/badge/Support-dps.media%2Fsupport-green)](https://dps.media/support)
+[](https://dps.media)
+[](mailto:hello@dps.media)
+[](https://dps.media/support)
 
 </div>
