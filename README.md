@@ -1,4 +1,4 @@
-# 🛡️ WordPress Security & Performance Booster
+# WordPress Security & Performance Booster
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster/releases)
 [![WordPress](https://img.shields.io/badge/WordPress-4.0+-blue.svg)](https://wordpress.org)
@@ -7,43 +7,43 @@
 
 A comprehensive WordPress plugin that enhances security and performance by disabling updates, preventing spam, and cleaning the admin interface.
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [Features](#-features)
-- [Installation](#-installation)
-- [Screenshots](#-screenshots)
-- [Configuration](#-configuration)
-- [Language Support](#-language-support)
-- [Requirements](#-requirements)
-- [Security Notice](#-security-notice)
-- [Support](#-support)
-- [Contributing](#-contributing)
-- [Changelog](#-changelog)
-- [License](#-license)
+- [Features](#features)
+- [Installation](#installation)
+- [Screenshots](#screenshots)
+- [Configuration](#configuration)
+- [Language Support](#language-support)
+- [Requirements](#requirements)
+- [Security Notice](#security-notice)
+- [Support](#support)
+- [Contributing](#contributing)
+- [Changelog](#changelog)
+- [License](#license)
 
-## ✨ Features
+## Features
 
-### 🔄 **Update Control**
+### Update Control
 - **Disable WordPress Updates**: Blocks all WordPress core, plugin, and theme update checks
 - **Reduce Server Load**: Eliminates background update processes and cronjobs
 - **Prevent Automatic Updates**: Stops all forms of automatic updates
 
-### 💬 **Comment Protection**
+### Comment Protection
 - **Disable Comments**: Completely removes comments across all post types
 - **Block Pingbacks & Trackbacks**: Prevents pingback and trackback spam
 - **Remove Comment UI**: Cleans admin menus and comment-related interfaces
 
-### 🔒 **Security Enhancement**
+### Security Enhancement
 - **Disable XML-RPC**: Blocks XML-RPC functionality to prevent brute force attacks
 - **Attack Prevention**: Comprehensive protection against common WordPress vulnerabilities
 - **Secure Headers**: Removes potentially dangerous HTTP headers
 
-### 🧹 **Interface Cleanup**
+### Interface Cleanup
 - **Hide Admin Notifications**: Removes plugin/theme promotional notifications
 - **Clean Dashboard**: Removes unnecessary dashboard widgets
 - **Streamlined UI**: Creates a cleaner, distraction-free admin experience
 
-## 🚀 Installation
+## Installation
 
 ### Method 1: Manual Installation
 1. Download the latest release from [GitHub Releases](https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster/releases)
@@ -58,7 +58,7 @@ cd /path/to/wordpress/wp-content/plugins/
 git clone https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster.git wp-security-performance-booster
 ```
 
-## 📸 Screenshots
+## Screenshots
 
 ### Modern Admin Interface
 ![Admin Interface](assets/screenshot-1.png)
@@ -72,31 +72,31 @@ git clone https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-B
 ![Language Switcher](assets/screenshot-3.png)
 *Multi-language support with easy language switching*
 
-## ⚙️ Configuration
+## Configuration
 
 Navigate to **WordPress Admin → Settings → Security Booster** to access the plugin settings.
 
 ### Available Options:
 
-#### 🔄 Update Control
+#### Update Control
 - **Disable WordPress Updates**: ✅ Recommended for staging/development
 - **Benefits**: Reduces server load, prevents unexpected changes
 
-#### 💬 Comment Protection  
+#### Comment Protection  
 - **Disable Comments**: ✅ Recommended for business sites
 - **Block Pingbacks & Trackbacks**: ✅ Highly recommended
 - **Benefits**: Eliminates spam, improves security
 
-#### 🔒 Security Enhancement
+#### Security Enhancement
 - **Disable XML-RPC**: ✅ Highly recommended
 - **Benefits**: Prevents brute force attacks, improves security
 
-#### 🧹 Interface Cleanup
+#### Interface Cleanup
 - **Hide Admin Notifications**: ✅ Recommended
 - **Clean Dashboard**: ✅ Recommended  
 - **Benefits**: Cleaner interface, better focus
 
-## 🌍 Language Support
+## Support
 
 The plugin supports multiple languages with automatic detection:
 
@@ -111,7 +111,7 @@ The plugin supports multiple languages with automatic detection:
 - **Persistent Storage**: Remembers user language preference
 - **Professional Translation**: All strings properly localized
 
-## 📋 Requirements
+## Requirements
 
 - **WordPress**: 4.0 or higher
 - **PHP**: 7.4 or higher
@@ -124,7 +124,7 @@ The plugin supports multiple languages with automatic detection:
 - ✅ PHP 8.0+
 - ✅ Latest browsers
 
-## ⚠️ Security Notice
+## Security Notice
 
 **Important**: This plugin is designed for expert users who understand the security implications of disabling updates.
 
@@ -145,7 +145,7 @@ The plugin supports multiple languages with automatic detection:
 - ❌ Sites without manual update management
 - ❌ Beginner WordPress users
 
-## 📧 Support
+## Support
 
 ### Developer Information
 - **Developer**: HỒ QUANG HIỂN
@@ -160,7 +160,7 @@ The plugin supports multiple languages with automatic detection:
 3. **Email Support**: hello@dps.media
 4. **Professional Support**: Available through DPS.MEDIA
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please read our contributing guidelines:
 
@@ -179,12 +179,12 @@ We welcome contributions! Please read our contributing guidelines:
 - ✨ **Features**: Suggest and implement new features
 - 📖 **Documentation**: Improve documentation
 
-## 📝 Changelog
+## Changelog
 
 ### Version 1.0.0
-**🎉 MAJOR RELEASE - Complete Rewrite**
+**Initial Release**
 
-#### ✨ New Features:
+#### New Features:
 - **Modern Admin Interface**: Flat, responsive design with DPS.MEDIA branding
 - **Selective Feature Control**: Toggle individual features on/off
 - **Multi-language Support**: Vietnamese, German, French translations
@@ -192,13 +192,13 @@ We welcome contributions! Please read our contributing guidelines:
 - **Enhanced Security**: XML-RPC blocking, comprehensive spam protection
 - **Performance Optimization**: Reduced server load, optimized code
 
-#### 🔧 Improvements:
+#### Improvements:
 - **Better UX**: Card-based interface with clear descriptions
 - **Professional Branding**: Complete DPS.MEDIA integration
 - **Code Architecture**: Modular, maintainable codebase
 - **Compatibility**: WordPress 6.0+ and PHP 8.0+ support
 
-#### 📝 Changes:
+#### Changes:
 - **Plugin Name**: "WordPress Security & Performance Booster"
 - **Text Domain**: `wp-security-performance-booster`
 - **Developer**: HỒ QUANG HIỂN / DPS.MEDIA
@@ -209,7 +209,7 @@ We welcome contributions! Please read our contributing guidelines:
 - Basic WordPress compatibility
 - Simple admin interface
 
-## 📄 License
+## License
 
 This project is licensed under the GPL v2 License - see the [LICENSE](LICENSE) file for details.
 
@@ -226,7 +226,7 @@ the Free Software Foundation; either version 2 of the License, or
 
 <div align="center">
 
-**Made with ❤️ by [DPS.MEDIA](https://dps.media)**
+**Made by [DPS.MEDIA](https://dps.media)**
 
 [![Website](https://img.shields.io/badge/Website-dps.media-blue)](https://dps.media)
 [![Email](https://img.shields.io/badge/Email-hello%40dps.media-red)](mailto:hello@dps.media)

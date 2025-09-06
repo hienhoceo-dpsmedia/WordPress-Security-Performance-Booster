@@ -15,47 +15,47 @@ Comprehensive WordPress security and performance plugin that disables updates, p
 
 WordPress Security & Performance Booster is a comprehensive plugin designed for expert users who want complete control over their WordPress installation. This plugin enhances both security and performance through multiple integrated features:
 
-**🛡️ Update Management:**
+**Update Management:**
 * Completely disables WordPress core, theme, and plugin update checks
 * Removes update notifications and cronjobs
 * Prevents automatic background updates
 * Reduces server load from constant update checking
 
-**🚫 Anti-Spam Protection:**
+**Anti-Spam Protection:**
 * Disables comments completely across all post types
 * Blocks pingbacks and trackbacks
 * Disables XML-RPC functionality to prevent attacks
 * Removes comment-related feeds and admin menus
 
-**🧹 Clean Interface:**
+**Clean Interface:**
 * Hides all plugin and theme notification spam
 * Removes unnecessary dashboard widgets
 * Cleans admin interface from promotional messages
 * Provides clear admin bar indicator when active
 
-**⚡ Performance Benefits:**
+**Performance Benefits:**
 * Reduces HTTP requests to WordPress.org APIs
 * Eliminates background update checks
 * Removes unnecessary admin dashboard elements
 * Optimized for minimal resource usage
 
-**🎯 Perfect for:**
+**Perfect for:**
 * Development and staging environments
 * Managed hosting with external update control
 * Sites requiring version stability
 * High-security installations
 * Expert users who manage updates manually
 
-**⚠️ Important Security Notice:**
+**Important Security Notice:**
 This plugin is designed for expert users who understand the implications of disabling updates. You must manually monitor and apply security updates. Never use this on production sites without proper security monitoring.
 
-**🌍 Multi-Language Support:**
+**Multi-Language Support:**
 * English (default)
 * Vietnamese (Tiếng Việt)
 * German (Deutsch) 
 * French (Français)
 
-**📧 Support & Contact**
+**Support & Contact**
 Developer: HỒ QUANG HIỂN
 Company: DPS.MEDIA
 Email: hello@dps.media

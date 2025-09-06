@@ -996,20 +996,22 @@ class WP_Security_Performance_Booster {
 	 * @since 2.0.0
 	 * @param string $hook The current admin page.
 	 */
-    public function enqueue_admin_assets( $hook ) {
+	public function enqueue_admin_assets( $hook ) {
         // Only load assets on our settings page for performance
         if ( 'settings_page_wpspb-settings' !== $hook ) {
             return;
         }
         
-        // Add inline CSS for modern design
-        wp_add_inline_style( 'wp-admin', $this->get_admin_css() );
+		// Add inline CSS for modern design
+		wp_add_inline_style( 'wp-admin', $this->get_admin_css() );
 
-        // Ensure a valid script handle and attach inline JS so it actually prints
-        // Use jQuery as a guaranteed handle and enqueue it explicitly
-        wp_enqueue_script( 'jquery' );
-        wp_add_inline_script( 'jquery', $this->get_admin_js() );
-    }
+		// Ensure a valid script handle and attach inline JS so it actually prints
+		// Use jQuery as a guaranteed handle and enqueue it explicitly
+		wp_enqueue_script( 'jquery' );
+		wp_add_inline_script( 'jquery', $this->get_admin_js() );
+		// Ensure dashicons are available for icons
+		wp_enqueue_style( 'dashicons' );
+	}
 
 	/**
 	 * Check and optimize database for performance
@@ -2545,6 +2547,60 @@ class WP_Security_Performance_Booster {
 					}
 				});
 				
+				// Replace broken icons and headings with Dashicons for a professional look
+				(function(){
+					// Header shield icon
+					var shield = document.querySelector('.wpspb-logo .wpspb-shield');
+					if (shield) {
+						shield.outerHTML = '<span class="dashicons dashicons-shield-alt" aria-hidden="true"></span>';
+					}
+					// Language header
+					var langH3 = document.querySelector('.wpspb-language-section h3');
+					if (langH3) {
+						langH3.innerHTML = '<span class="dashicons dashicons-translation" aria-hidden="true"></span> ' + 'Language';
+					}
+					// Status header
+					var statusH3 = document.querySelector('.wpspb-status-section h3');
+					if (statusH3) {
+						statusH3.innerHTML = '<span class="dashicons dashicons-admin-generic" aria-hidden="true"></span> ' + 'Current Feature Status';
+					}
+					// Status icons
+					document.querySelectorAll('.wpspb-status-item').forEach(function(item){
+						var badge = item.querySelector('.wpspb-status-badge');
+						var iconSpan = item.querySelector('.wpspb-status-icon');
+						if (badge && iconSpan) {
+							if (badge.classList.contains('wpspb-status-blocked')) {
+								iconSpan.innerHTML = '<span class="dashicons dashicons-no-alt" aria-hidden="true"></span>';
+							} else {
+								iconSpan.innerHTML = '<span class="dashicons dashicons-yes" aria-hidden="true"></span>';
+							}
+						}
+					});
+					// Card icons by title
+					document.querySelectorAll('.wpspb-card').forEach(function(card){
+						var h2 = card.querySelector('h2');
+						var iconEl = card.querySelector('.card-icon');
+						if (!h2 || !iconEl) return;
+						var t = (h2.textContent || '').toLowerCase();
+						var iconClass = 'dashicons-admin-generic';
+						if (t.indexOf('update') !== -1) iconClass = 'dashicons-update';
+						else if (t.indexOf('comment') !== -1) iconClass = 'dashicons-admin-comments';
+						else if (t.indexOf('security') !== -1) iconClass = 'dashicons-shield-alt';
+						else if (t.indexOf('interface') !== -1 || t.indexOf('cleanup') !== -1) iconClass = 'dashicons-admin-appearance';
+						iconEl.innerHTML = '<span class="dashicons ' + iconClass + '" aria-hidden="true"></span>';
+					});
+					// Save button icon
+					var btnIcon = document.querySelector('.btn-icon');
+					if (btnIcon) {
+						btnIcon.innerHTML = '<span class="dashicons dashicons-yes-alt" aria-hidden="true"></span>';
+					}
+					// Support header icon
+					var supportH3 = document.querySelector('.wpspb-contact h3');
+					if (supportH3) {
+						supportH3.innerHTML = '<span class="dashicons dashicons-sos" aria-hidden="true"></span> ' + supportH3.textContent.replace(/^[^A-Za-z]*/, '');
+					}
+				})();
+				
 				// Enhanced form validation with detailed logging
 				const form = document.querySelector(".wpspb-form");
 				if (form) {
@@ -2602,6 +2658,14 @@ class WP_Security_Performance_Booster {
 				font-size: 28px;
 				font-weight: 700;
 				color: white;
+			}
+			.wpspb-logo .dashicons {
+				font-size: 32px;
+				width: 32px;
+				height: 32px;
+				line-height: 32px;
+				margin-right: 10px;
+				vertical-align: middle;
 			}
 			
 			.wpspb-shield {
@@ -2691,6 +2755,12 @@ class WP_Security_Performance_Booster {
 			.card-icon {
 				font-size: 20px;
 				margin-right: 8px;
+			}
+			.card-icon .dashicons {
+				font-size: 20px;
+				width: 20px;
+				height: 20px;
+				line-height: 20px;
 			}
 			
 			.card-description {
@@ -2911,6 +2981,12 @@ class WP_Security_Performance_Booster {
 			.wpspb-status-icon {
 				font-size: 16px;
 				flex-shrink: 0;
+			}
+			.wpspb-status-icon .dashicons {
+				font-size: 16px;
+				width: 16px;
+				height: 16px;
+				line-height: 16px;
 			}
 			
 			.wpspb-status-name {
