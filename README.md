@@ -1,6 +1,6 @@
 # 🛡️ WordPress Security & Performance Booster
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster/releases)
 [![WordPress](https://img.shields.io/badge/WordPress-4.0+-blue.svg)](https://wordpress.org)
 [![PHP](https://img.shields.io/badge/PHP-7.4+-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL%20v2-green.svg)](LICENSE)
@@ -181,7 +181,7 @@ We welcome contributions! Please read our contributing guidelines:
 
 ## 📝 Changelog
 
-### Version 2.0.0 (2024-01-01)
+### Version 1.0.0
 **🎉 MAJOR RELEASE - Complete Rewrite**
 
 #### ✨ New Features:
