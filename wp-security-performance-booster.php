@@ -1868,19 +1868,19 @@ class WP_Security_Performance_Booster {
 
         $plugin_data = function_exists( 'get_plugin_data' ) ? get_plugin_data( __FILE__ ) : array( 'Name' => 'WP Security & Performance Booster' );
 
-		$admin_bar->add_menu([
+		$admin_bar->add_menu(array(
 			'id' => 'wpspb-notice',
 			'title' => '<span class="dashicons dashicons-shield-alt" aria-hidden="true"></span>',
 			'href' => network_admin_url('plugins.php'),
-			'meta' => [
+			'meta' => array(
 				'class' => 'wp-admin-bar-wpspb-notice',
 				'title' => sprintf(
 					/* translators: %s: Name of the plugin */
 					__('Security & Performance Booster is active: Updates disabled, spam blocked, notifications hidden!', 'wp-security-performance-booster'),
 					$plugin_data['Name']
 				)
-			],
-		]);
+			),
+		));
 	}
 
 
