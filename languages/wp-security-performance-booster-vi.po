@@ -150,3 +150,6 @@ msgstr "Hỗ trợ:"
 
 msgid "Security & Performance Booster is active: Updates disabled, spam blocked, notifications hidden!"
 msgstr "Tăng Cường Bảo Mật & Hiệu Suất đang hoạt động: Đã tắt cập nhật, chặn spam, ẩn thông báo!"
+
+msgid "WPSPB activation error: "
+msgstr "Lỗi kích hoạt WPSPB: "

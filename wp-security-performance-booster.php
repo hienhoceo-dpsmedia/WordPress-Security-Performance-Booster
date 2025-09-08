@@ -59,7 +59,7 @@ if ( function_exists( 'register_activation_hook' ) ) {
                 try {
                     WP_Security_Performance_Booster::get_instance()->activate();
                 } catch ( Exception $e ) {
-                    update_option( 'wpspb_last_activation_error', 'WPSPB activation error: ' . $e->getMessage() );
+                    update_option( 'wpspb_last_activation_error', __( 'WPSPB activation error: ', 'wp-security-performance-booster' ) . $e->getMessage() );
                 }
             }
         }
