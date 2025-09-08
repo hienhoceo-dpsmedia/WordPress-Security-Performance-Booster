@@ -11,7 +11,7 @@
  *
  * @package WordPress_Plugins
  * @subpackage WP_Security_Performance_Booster
- * @version 1.0.5
+ * @version 1.0.6
  * @author HỒ QUANG HIỂN <hello@dps.media>
  * @copyright 2024 DPS.MEDIA
  * @license GPL-2.0-or-later
@@ -21,7 +21,7 @@
  * Core Name: WordPress Security & Performance Booster
  * Core URI:  https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster
  * Summary: Internal core file for the WordPress Security & Performance Booster plugin.
- * Core Version: 1.0.5
+ * Core Version: 1.0.6
  * Author:      HỒ QUANG HIỂN
  * Author URI:  https://dps.media/
  * Text Domain (in loader): wp-security-performance-booster
@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Define the plugin version
  */
 if ( ! defined( 'WPSPB_VERSION' ) ) {
-    define( 'WPSPB_VERSION', '1.0.5' );
+    define( 'WPSPB_VERSION', '1.0.6' );
 }
 
 /**
