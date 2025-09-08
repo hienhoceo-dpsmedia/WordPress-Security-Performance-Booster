@@ -1388,33 +1388,33 @@ class WP_Security_Performance_Booster {
 		 * Disable Theme Updates
 		 * 2.8 to 3.0
 		 */
-		add_filter( 'pre_transient_update_themes', [$this, 'last_checked_atm'] );
+		add_filter( 'pre_transient_update_themes', array( $this, 'last_checked_atm' ) );
 		/*
 		 * 3.0
 		 */
-		add_filter( 'pre_site_transient_update_themes', [$this, 'last_checked_atm'] );
+		add_filter( 'pre_site_transient_update_themes', array( $this, 'last_checked_atm' ) );
 
 
 		/*
 		 * Disable Plugin Updates
 		 * 2.8 to 3.0
 		 */
-		add_action( 'pre_transient_update_plugins', [$this, 'last_checked_atm'] );
+		add_action( 'pre_transient_update_plugins', array( $this, 'last_checked_atm' ) );
 		/*
 		 * 3.0
 		 */
-		add_filter( 'pre_site_transient_update_plugins', [$this, 'last_checked_atm'] );
+		add_filter( 'pre_site_transient_update_plugins', array( $this, 'last_checked_atm' ) );
 
 
 		/*
 		 * Disable Core Updates
 		 * 2.8 to 3.0
 		 */
-		add_filter( 'pre_transient_update_core', [$this, 'last_checked_atm'] );
+		add_filter( 'pre_transient_update_core', array( $this, 'last_checked_atm' ) );
 		/*
 		 * 3.0
 		 */
-		add_filter( 'pre_site_transient_update_core', [$this, 'last_checked_atm'] );
+		add_filter( 'pre_site_transient_update_core', array( $this, 'last_checked_atm' ) );
 		
 		
 		/*
@@ -1422,10 +1422,10 @@ class WP_Security_Performance_Booster {
 		 *
 		 * @link https://wordpress.org/support/topic/possible-performance-improvement/#post-8970451
 		 */
-        add_filter('schedule_event', [$this, 'filter_cron_events']);
+        add_filter( 'schedule_event', array( $this, 'filter_cron_events' ) );
 		
-		add_action( 'pre_set_site_transient_update_plugins', [$this, 'last_checked_atm'], 21, 1 );
-		add_action( 'pre_set_site_transient_update_themes', [$this, 'last_checked_atm'], 21, 1 );
+		add_action( 'pre_set_site_transient_update_plugins', array( $this, 'last_checked_atm' ), 21, 1 );
+		add_action( 'pre_set_site_transient_update_themes', array( $this, 'last_checked_atm' ), 21, 1 );
 
 		/*
 		 * Disable All Automatic Updates
@@ -3085,14 +3085,26 @@ class WP_Security_Performance_Booster {
 if ( function_exists( 'register_activation_hook' ) ) {
     if ( ! function_exists( 'wpspb_do_activate' ) ) {
     function wpspb_do_activate() {
+        // Lightweight debug helper to a file under wp-content.
+        if ( ! function_exists( 'wpspb_debug_log' ) ) {
+            function wpspb_debug_log( $message ) {
+                $file = ( defined( 'WP_CONTENT_DIR' ) ? WP_CONTENT_DIR : dirname( __FILE__ ) ) . '/wpspb-activate.log';
+                $time = date( 'Y-m-d H:i:s' );
+                @error_log( "[{$time}] " . $message . "\n", 3, $file );
+            }
+        }
+        wpspb_debug_log( 'Activation start' );
         // Respect minimum PHP requirement
         if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
+            wpspb_debug_log( 'Blocked: PHP version too low: ' . PHP_VERSION );
             return;
         }
         // Use Exception catch for broad compatibility across PHP versions.
         try {
             if ( class_exists( 'WP_Security_Performance_Booster' ) ) {
+                wpspb_debug_log( 'Calling ::activate()' );
                 WP_Security_Performance_Booster::get_instance()->activate();
+                wpspb_debug_log( 'Activate completed' );
             }
         } catch ( Exception $e ) {
             $message = 'WPSPB activation error: ' . $e->getMessage();
@@ -3102,6 +3114,7 @@ if ( function_exists( 'register_activation_hook' ) ) {
             if ( function_exists( 'error_log' ) ) {
                 error_log( $message );
             }
+            wpspb_debug_log( 'Caught exception: ' . $message );
         }
     }
     }
@@ -3136,6 +3149,20 @@ if ( ! function_exists( 'wpspb_show_activation_error_notice' ) ) {
         }
     }
     add_action( 'admin_notices', 'wpspb_show_activation_error_notice' );
+}
+
+// Capture fatal errors during activation and log them.
+if ( ! function_exists( 'wpspb_shutdown_logger' ) ) {
+    function wpspb_shutdown_logger() {
+        if ( ! function_exists( 'wpspb_debug_log' ) ) {
+            return;
+        }
+        $err = error_get_last();
+        if ( $err && isset( $err['type'] ) && in_array( $err['type'], array( E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR ), true ) ) {
+            wpspb_debug_log( 'Shutdown fatal: ' . $err['message'] . ' in ' . $err['file'] . ':' . $err['line'] );
+        }
+    }
+    register_shutdown_function( 'wpspb_shutdown_logger' );
 }
 
 /**
