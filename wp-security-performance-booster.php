@@ -909,22 +909,25 @@ class WP_Security_Performance_Booster {
 			return false;
 		}
 		
-		// Check database connection
-		if ( ! $wpdb->check_connection() ) {
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				error_log( 'WPSPB: Database connection check failed during activation' );
-			}
-			return false;
-		}
+        // Check database connection (only if method exists on this WP version)
+        if ( method_exists( $wpdb, 'check_connection' ) && ! $wpdb->check_connection() ) {
+            if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                error_log( 'WPSPB: Database connection check failed during activation' );
+            }
+            return false;
+        }
 		
 		// Check for table corruption
 		$corrupted_tables = array();
-		foreach ( $required_tables as $table ) {
-			$result = $wpdb->get_row( "CHECK TABLE {$table}" );
-			if ( isset( $result->Msg_text ) && strpos( $result->Msg_text, 'OK' ) === false ) {
-				$corrupted_tables[] = $table;
-			}
-		}
+        foreach ( $required_tables as $table ) {
+            // Suppress potential DB-level warnings from CHECK TABLE on constrained hosts
+            $result = $wpdb->get_row( "CHECK TABLE `{$table}`" );
+            if ( is_object( $result ) && isset( $result->Msg_text ) ) {
+                if ( stripos( $result->Msg_text, 'OK' ) === false ) {
+                    $corrupted_tables[] = $table;
+                }
+            }
+        }
 		
 		if ( ! empty( $corrupted_tables ) ) {
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
@@ -3061,6 +3064,7 @@ class WP_Security_Performance_Booster {
  * Ensures hooks are available during activation without relying on class instantiation order.
  */
 if ( function_exists( 'register_activation_hook' ) ) {
+    if ( ! function_exists( 'wpspb_do_activate' ) ) {
     function wpspb_do_activate() {
         // Respect minimum PHP requirement
         if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
@@ -3070,19 +3074,24 @@ if ( function_exists( 'register_activation_hook' ) ) {
             WP_Security_Performance_Booster::get_instance()->activate();
         }
     }
+    }
     register_activation_hook( __FILE__, 'wpspb_do_activate' );
 
+    if ( ! function_exists( 'wpspb_do_deactivate' ) ) {
     function wpspb_do_deactivate() {
         if ( class_exists( 'WP_Security_Performance_Booster' ) ) {
             WP_Security_Performance_Booster::get_instance()->deactivate();
         }
     }
+    }
     register_deactivation_hook( __FILE__, 'wpspb_do_deactivate' );
 
+    if ( ! function_exists( 'wpspb_do_uninstall' ) ) {
     function wpspb_do_uninstall() {
         if ( is_callable( array( 'WP_Security_Performance_Booster', 'uninstall' ) ) ) {
             WP_Security_Performance_Booster::uninstall();
         }
+    }
     }
     register_uninstall_hook( __FILE__, 'wpspb_do_uninstall' );
 }
