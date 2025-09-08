@@ -11,7 +11,7 @@
  *
  * @package WordPress_Plugins
  * @subpackage WP_Security_Performance_Booster
- * @version 1.0.3
+ * @version 1.0.4
  * @author HỒ QUANG HIỂN <hello@dps.media>
  * @copyright 2024 DPS.MEDIA
  * @license GPL-2.0-or-later
@@ -21,7 +21,7 @@
  * Plugin Name: WordPress Security & Performance Booster
  * Plugin URI:  https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster
  * Description: Comprehensive security and performance enhancement plugin that disables updates, prevents spam (comments, pingbacks, trackbacks, XML-RPC), reduces server load, and cleans notification spam. Perfect for expert users and development environments.
- * Version:     1.0.3
+ * Version:     1.0.4
  * Author:      HỒ QUANG HIỂN
  * Author URI:  https://dps.media/
  * Text Domain: wp-security-performance-booster
@@ -58,7 +58,7 @@
 
 // Prevent direct access
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 
@@ -67,7 +67,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Define the plugin version
  */
 if ( ! defined( 'WPSPB_VERSION' ) ) {
-    define( 'WPSPB_VERSION', '1.0.3' );
+    define( 'WPSPB_VERSION', '1.0.4' );
+}
+
+/**
+ * Early PHP version guard to avoid parse/runtime errors on older PHP.
+ * Keep this section PHP 5.2 compatible.
+ */
+if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
+    if ( is_admin() ) {
+        function wpspb_php_min_version_notice() {
+            echo '<div class="notice notice-error"><p>' . esc_html__( 'WordPress Security & Performance Booster requires PHP 7.4 or higher. Please upgrade PHP.', 'wp-security-performance-booster' ) . '</p></div>';
+        }
+        add_action( 'admin_notices', 'wpspb_php_min_version_notice' );
+    }
+    // Do not load the rest of the plugin on unsupported PHP versions.
+    return;
 }
 
 /**
@@ -998,22 +1013,26 @@ class WP_Security_Performance_Booster {
 	 * @since 2.0.0
 	 * @param string $hook The current admin page.
 	 */
-	public function enqueue_admin_assets( $hook ) {
+    public function enqueue_admin_assets( $hook ) {
         // Only load assets on our settings page for performance
         if ( 'settings_page_wpspb-settings' !== $hook ) {
             return;
         }
         
-		// Add inline CSS for modern design
-		wp_add_inline_style( 'wp-admin', $this->get_admin_css() );
+        // Add inline CSS for modern design
+        if ( function_exists( 'wp_add_inline_style' ) ) {
+            wp_add_inline_style( 'wp-admin', $this->get_admin_css() );
+        }
 
-		// Ensure a valid script handle and attach inline JS so it actually prints
-		// Use jQuery as a guaranteed handle and enqueue it explicitly
-		wp_enqueue_script( 'jquery' );
-		wp_add_inline_script( 'jquery', $this->get_admin_js() );
-		// Ensure dashicons are available for icons
-		wp_enqueue_style( 'dashicons' );
-	}
+        // Ensure a valid script handle and attach inline JS so it actually prints
+        // Use jQuery as a guaranteed handle and enqueue it explicitly
+        wp_enqueue_script( 'jquery' );
+        if ( function_exists( 'wp_add_inline_script' ) ) {
+            wp_add_inline_script( 'jquery', $this->get_admin_js() );
+        }
+        // Ensure dashicons are available for icons
+        wp_enqueue_style( 'dashicons' );
+    }
 
 	/**
 	 * Check and optimize database for performance
@@ -3070,12 +3089,12 @@ if ( function_exists( 'register_activation_hook' ) ) {
         if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
             return;
         }
+        // Use Exception catch for broad compatibility across PHP versions.
         try {
             if ( class_exists( 'WP_Security_Performance_Booster' ) ) {
                 WP_Security_Performance_Booster::get_instance()->activate();
             }
-        } catch ( \Throwable $e ) {
-            // Store error for admin notice and debugging
+        } catch ( Exception $e ) {
             $message = 'WPSPB activation error: ' . $e->getMessage();
             if ( function_exists( 'update_option' ) ) {
                 update_option( 'wpspb_last_activation_error', $message );
