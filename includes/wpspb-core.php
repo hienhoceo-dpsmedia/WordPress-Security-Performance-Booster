@@ -18,20 +18,20 @@
  * @link https://dps.media/
  * 
  * @wordpress-plugin
- * Plugin Name: WordPress Security & Performance Booster
- * Plugin URI:  https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster
- * Description: Comprehensive security and performance enhancement plugin that disables updates, prevents spam (comments, pingbacks, trackbacks, XML-RPC), reduces server load, and cleans notification spam. Perfect for expert users and development environments.
- * Version:     1.0.5
+ * Core Name: WordPress Security & Performance Booster
+ * Core URI:  https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster
+ * Summary: Internal core file for the WordPress Security & Performance Booster plugin.
+ * Core Version: 1.0.5
  * Author:      HỒ QUANG HIỂN
  * Author URI:  https://dps.media/
- * Text Domain: wp-security-performance-booster
- * Domain Path: /languages
- * Requires at least: 4.0
- * Tested up to: 6.8
- * Requires PHP: 7.4
- * Network: false
- * License:     GPL v2 or later
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain (in loader): wp-security-performance-booster
+ * Domain Path (in loader): /languages
+ * Requires at least (in loader): 4.0
+ * Tested up to (in loader): 6.8
+ * Requires PHP (in loader): 7.4
+ * Network (in loader): false
+ * License (in loader):     GPL v2 or later
+ * License URI (in loader): https://www.gnu.org/licenses/gpl-2.0.html
  * 
  * Developer: HỒ QUANG HIỂN
  * Company: DPS.MEDIA
