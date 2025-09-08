@@ -23,12 +23,16 @@ class WP_Security_Performance_Booster {
     private $option_key = 'wpspb_settings';
 
     private $defaults = array(
-        'disable_updates'    => false,
-        'disable_comments'   => false,
-        'disable_xmlrpc'     => false,
-        'hide_notifications' => false,
-        'disable_pingbacks'  => false,
-        'clean_dashboard'    => false,
+        // Updates (granular)
+        'disable_core_updates'   => false,
+        'disable_plugin_updates' => false,
+        'disable_theme_updates'  => false,
+        // Other features
+        'disable_comments'       => false,
+        'disable_xmlrpc'         => false,
+        'hide_notifications'     => false,
+        'disable_pingbacks'      => false,
+        'clean_dashboard'        => false,
     );
 
     public static function get_instance() {
@@ -123,16 +127,15 @@ class WP_Security_Performance_Booster {
             wp_register_style( 'wpspb-admin', false );
         }
         wp_enqueue_style( 'wpspb-admin' );
-        $css = '.wpspb-wrap{max-width:820px;margin-top:20px}.wpspb-card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px}.wpspb-card h2{margin-top:0}';
+        $css = '.wpspb-wrap{max-width:820px;margin-top:20px}.wpspb-card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px}.wpspb-card h2{margin-top:0}.wpspb-card h3{margin:18px 0 8px}.wpspb-card .description{color:#555;display:block;margin:6px 0 0}';
         wp_add_inline_style( 'wpspb-admin', $css );
     }
 
     public function apply_features() {
-        $settings = get_option( $this->option_key, $this->defaults );
+        $settings = $this->get_settings();
 
-        if ( ! empty( $settings['disable_updates'] ) ) {
-            $this->hook_update_blockers();
-        }
+        // Updates (granular toggles)
+        $this->hook_update_blockers( $settings );
         if ( ! empty( $settings['disable_comments'] ) ) {
             $this->hook_disable_comments();
         }
@@ -153,20 +156,27 @@ class WP_Security_Performance_Booster {
         }
     }
 
-    private function hook_update_blockers() {
-        add_filter( 'pre_site_transient_update_plugins', array( $this, 'block_update_transient' ) );
-        add_filter( 'pre_site_transient_update_themes', array( $this, 'block_update_transient' ) );
-        add_filter( 'pre_site_transient_update_core', array( $this, 'block_update_transient' ) );
-
-        add_filter( 'auto_update_plugin', '__return_false' );
-        add_filter( 'auto_update_theme', '__return_false' );
-        add_filter( 'automatic_updater_disabled', '__return_true' );
-        add_filter( 'allow_minor_auto_core_updates', '__return_false' );
-        add_filter( 'allow_major_auto_core_updates', '__return_false' );
-        add_filter( 'allow_dev_auto_core_updates', '__return_false' );
-        add_filter( 'auto_update_core', '__return_false' );
-
+    private function hook_update_blockers( array $settings ) {
+        // Transient blockers
+        if ( ! empty( $settings['disable_plugin_updates'] ) ) {
+            add_filter( 'pre_site_transient_update_plugins', array( $this, 'block_update_transient' ) );
+            add_filter( 'auto_update_plugin', '__return_false' );
+        }
+        if ( ! empty( $settings['disable_theme_updates'] ) ) {
+            add_filter( 'pre_site_transient_update_themes', array( $this, 'block_update_transient' ) );
+            add_filter( 'auto_update_theme', '__return_false' );
+        }
+        if ( ! empty( $settings['disable_core_updates'] ) ) {
+            add_filter( 'pre_site_transient_update_core', array( $this, 'block_update_transient' ) );
+            add_filter( 'automatic_updater_disabled', '__return_true' );
+            add_filter( 'allow_minor_auto_core_updates', '__return_false' );
+            add_filter( 'allow_major_auto_core_updates', '__return_false' );
+            add_filter( 'allow_dev_auto_core_updates', '__return_false' );
+            add_filter( 'auto_update_core', '__return_false' );
+        }
+        // HTTP request blocker (checks settings at runtime)
         add_filter( 'pre_http_request', array( $this, 'block_update_http' ), 10, 3 );
+        // Cron schedule blocker (checks settings at runtime)
         add_filter( 'schedule_event', array( $this, 'filter_schedule_update_events' ) );
     }
 
@@ -177,25 +187,39 @@ class WP_Security_Performance_Booster {
     }
 
     public function block_update_http( $pre, $args, $url ) {
+        $settings = $this->get_settings();
         if ( empty( $url ) || ! is_string( $url ) ) {
             return $pre;
         }
         $host = wp_parse_url( $url, PHP_URL_HOST );
+        $path = wp_parse_url( $url, PHP_URL_PATH );
         if ( ! $host ) {
             return $pre;
         }
-        if ( false !== stripos( $host, 'api.wordpress.org' ) &&
-            ( false !== stripos( $url, 'update-check' ) || false !== stripos( $url, 'version-check' ) || false !== stripos( $url, 'browse-happy' ) || false !== stripos( $url, 'serve-happy' ) ) ) {
-            return true;
+        if ( false !== stripos( $host, 'api.wordpress.org' ) && is_string( $path ) ) {
+            // Core updates and related checks
+            if ( ! empty( $settings['disable_core_updates'] ) && ( false !== stripos( $path, '/core/version-check' ) || false !== stripos( $path, '/core/browse-happy' ) || false !== stripos( $path, '/core/serve-happy' ) ) ) {
+                return true;
+            }
+            // Plugin updates
+            if ( ! empty( $settings['disable_plugin_updates'] ) && false !== stripos( $path, '/plugins/update-check' ) ) {
+                return true;
+            }
+            // Theme updates
+            if ( ! empty( $settings['disable_theme_updates'] ) && false !== stripos( $path, '/themes/update-check' ) ) {
+                return true;
+            }
         }
         return $pre;
     }
 
     public function filter_schedule_update_events( $event ) {
+        $settings = $this->get_settings();
         if ( is_object( $event ) && isset( $event->hook ) ) {
-            if ( in_array( $event->hook, array( 'wp_version_check', 'wp_update_plugins', 'wp_update_themes', 'wp_maybe_auto_update' ), true ) ) {
-                return false;
-            }
+            if ( 'wp_version_check' === $event->hook && ! empty( $settings['disable_core_updates'] ) ) { return false; }
+            if ( 'wp_update_plugins' === $event->hook && ! empty( $settings['disable_plugin_updates'] ) ) { return false; }
+            if ( 'wp_update_themes' === $event->hook && ! empty( $settings['disable_theme_updates'] ) ) { return false; }
+            if ( 'wp_maybe_auto_update' === $event->hook && ( ! empty( $settings['disable_core_updates'] ) || ! empty( $settings['disable_plugin_updates'] ) || ! empty( $settings['disable_theme_updates'] ) ) ) { return false; }
         }
         return $event;
     }
@@ -282,7 +306,7 @@ class WP_Security_Performance_Booster {
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wp-security-performance-booster' ) );
         }
-        $settings = get_option( $this->option_key, $this->defaults );
+        $settings = $this->get_settings();
         ?>
         <div class="wrap wpspb-wrap">
             <h1><?php echo esc_html__( 'Security & Performance Booster', 'wp-security-performance-booster' ); ?></h1>
@@ -290,17 +314,44 @@ class WP_Security_Performance_Booster {
                 <?php settings_fields( $this->option_key ); ?>
                 <div class="wpspb-card">
                     <h2><?php echo esc_html__( 'Features', 'wp-security-performance-booster' ); ?></h2>
-                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_updates]" value="1" <?php checked( ! empty( $settings['disable_updates'] ) ); ?> /> <?php echo esc_html__( 'Disable WordPress updates (core, plugins, themes)', 'wp-security-performance-booster' ); ?></label></p>
-                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_comments]" value="1" <?php checked( ! empty( $settings['disable_comments'] ) ); ?> /> <?php echo esc_html__( 'Disable comments (and trackbacks)', 'wp-security-performance-booster' ); ?></label></p>
-                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_xmlrpc]" value="1" <?php checked( ! empty( $settings['disable_xmlrpc'] ) ); ?> /> <?php echo esc_html__( 'Disable XML-RPC', 'wp-security-performance-booster' ); ?></label></p>
-                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_pingbacks]" value="1" <?php checked( ! empty( $settings['disable_pingbacks'] ) ); ?> /> <?php echo esc_html__( 'Disable pingbacks', 'wp-security-performance-booster' ); ?></label></p>
-                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[hide_notifications]" value="1" <?php checked( ! empty( $settings['hide_notifications'] ) ); ?> /> <?php echo esc_html__( 'Hide admin notifications', 'wp-security-performance-booster' ); ?></label></p>
-                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[clean_dashboard]" value="1" <?php checked( ! empty( $settings['clean_dashboard'] ) ); ?> /> <?php echo esc_html__( 'Clean dashboard widgets', 'wp-security-performance-booster' ); ?></label></p>
+                    <h3><?php echo esc_html__( 'Updates', 'wp-security-performance-booster' ); ?></h3>
+                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_core_updates]" value="1" <?php checked( ! empty( $settings['disable_core_updates'] ) ); ?> /> <?php echo esc_html__( 'Disable Core Updates', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Blocks WordPress core version checks and automatic updates. Use on staging or when you pin WP version. Security updates must be applied manually.', 'wp-security-performance-booster' ); ?></span></p>
+                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_plugin_updates]" value="1" <?php checked( ! empty( $settings['disable_plugin_updates'] ) ); ?> /> <?php echo esc_html__( 'Disable Plugin Updates', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Stops plugin update checks and auto-updates. Useful for controlled deploys or pinned plugin versions.', 'wp-security-performance-booster' ); ?></span></p>
+                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_theme_updates]" value="1" <?php checked( ! empty( $settings['disable_theme_updates'] ) ); ?> /> <?php echo esc_html__( 'Disable Theme Updates', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Stops theme update checks and auto-updates. Use when themes are managed externally or pinned.', 'wp-security-performance-booster' ); ?></span></p>
+                    <h3><?php echo esc_html__( 'Comments & Discussion', 'wp-security-performance-booster' ); ?></h3>
+                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_comments]" value="1" <?php checked( ! empty( $settings['disable_comments'] ) ); ?> /> <?php echo esc_html__( 'Disable Comments and Trackbacks', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Removes comment functionality across all post types, disables trackbacks, and cleans related UI.', 'wp-security-performance-booster' ); ?></span></p>
+                    <h3><?php echo esc_html__( 'Security', 'wp-security-performance-booster' ); ?></h3>
+                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_xmlrpc]" value="1" <?php checked( ! empty( $settings['disable_xmlrpc'] ) ); ?> /> <?php echo esc_html__( 'Disable XML-RPC', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Blocks the XML-RPC endpoint to reduce brute-force and pingback abuse. Avoid if you rely on apps that need XML-RPC.', 'wp-security-performance-booster' ); ?></span></p>
+                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[disable_pingbacks]" value="1" <?php checked( ! empty( $settings['disable_pingbacks'] ) ); ?> /> <?php echo esc_html__( 'Disable Pingbacks', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Removes pingback headers and XML-RPC pingback methods to mitigate reflection attacks.', 'wp-security-performance-booster' ); ?></span></p>
+                    <h3><?php echo esc_html__( 'Admin Experience', 'wp-security-performance-booster' ); ?></h3>
+                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[hide_notifications]" value="1" <?php checked( ! empty( $settings['hide_notifications'] ) ); ?> /> <?php echo esc_html__( 'Hide Admin Notifications', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Suppresses most plugin/theme nag notices for a cleaner admin. Use carefully to avoid missing important alerts.', 'wp-security-performance-booster' ); ?></span></p>
+                    <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[clean_dashboard]" value="1" <?php checked( ! empty( $settings['clean_dashboard'] ) ); ?> /> <?php echo esc_html__( 'Clean Dashboard Widgets', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Removes WordPress news/quick draft/activity widgets to reduce clutter and improve load time.', 'wp-security-performance-booster' ); ?></span></p>
                 </div>
                 <?php submit_button(); ?>
             </form>
         </div>
         <?php
     }
-}
 
+    private function get_settings() {
+        $settings = get_option( $this->option_key, $this->defaults );
+        // Migrate legacy single toggle to granular, if present
+        if ( isset( $settings['disable_updates'] ) ) {
+            $flag = (bool) $settings['disable_updates'];
+            unset( $settings['disable_updates'] );
+            if ( ! isset( $settings['disable_core_updates'] ) ) {
+                $settings['disable_core_updates'] = $flag;
+            }
+            if ( ! isset( $settings['disable_plugin_updates'] ) ) {
+                $settings['disable_plugin_updates'] = $flag;
+            }
+            if ( ! isset( $settings['disable_theme_updates'] ) ) {
+                $settings['disable_theme_updates'] = $flag;
+            }
+            // Persist migration
+            update_option( $this->option_key, $settings );
+        }
+        // Merge with defaults to ensure all keys exist
+        return array_merge( $this->defaults, is_array( $settings ) ? $settings : array() );
+    }
+}
