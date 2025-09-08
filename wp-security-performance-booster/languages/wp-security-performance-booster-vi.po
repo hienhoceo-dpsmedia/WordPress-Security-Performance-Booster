@@ -1,0 +1,155 @@
+# Vietnamese translation for WordPress Security & Performance Booster
+# Copyright (C) 2024 HỒ QUANG HIỂN
+# This file is distributed under the GPL v2 or later.
+# Translator: HỒ QUANG HIỂN <hello@dps.media>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Security & Performance Booster 1.0.0\n"
+"Report-Msgid-Bugs-To: hello@dps.media\n"
+"POT-Creation-Date: 2024-09-01 12:00+0700\n"
+"PO-Revision-Date: 2024-09-01 12:00+0700\n"
+"Last-Translator: HỒ QUANG HIỂN <hello@dps.media>\n"
+"Language-Team: Vietnamese\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_x;_n;_nx;esc_attr__;esc_attr_e;esc_html__;esc_html_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wp-security-performance-booster.php
+msgid "Security & Performance Booster"
+msgstr "Tăng Cường Bảo Mật & Hiệu Suất"
+
+msgid "by"
+msgstr "bởi"
+
+msgid "Settings saved successfully! Features have been updated and are now active."
+msgstr "Cài đặt đã được lưu thành công! Các tính năng đã được cập nhật và hiện đang hoạt động."
+
+msgid "Language / Ngôn ngữ"
+msgstr "Ngôn ngữ / Language"
+
+msgid "Current Feature Status"
+msgstr "Trạng Thái Tính Năng Hiện Tại"
+
+msgid "WordPress Updates"
+msgstr "Cập Nhật WordPress"
+
+msgid "Core, plugins, themes update blocking"
+msgstr "Chặn cập nhật core, plugin, theme"
+
+msgid "Comments System"
+msgstr "Hệ Thống Bình Luận"
+
+msgid "Comment forms and functionality"
+msgstr "Form bình luận và chức năng"
+
+msgid "XML-RPC Service"
+msgstr "Dịch Vụ XML-RPC"
+
+msgid "XML-RPC endpoint accessibility"
+msgstr "Khả năng truy cập endpoint XML-RPC"
+
+msgid "Admin Notifications"
+msgstr "Thông Báo Quản Trị"
+
+msgid "Plugin/theme promotional messages"
+msgstr "Thông báo quảng cáo plugin/theme"
+
+msgid "Blocked"
+msgstr "Đã Chặn"
+
+msgid "Active"
+msgstr "Hoạt Động"
+
+msgid "Update Control"
+msgstr "Kiểm Soát Cập Nhật"
+
+msgid "Manage WordPress automatic updates and notifications"
+msgstr "Quản lý cập nhật tự động và thông báo WordPress"
+
+msgid "Disable WordPress Updates"
+msgstr "Tắt Cập Nhật WordPress"
+
+msgid "Blocks all WordPress core, plugin, and theme update checks. Reduces server load and prevents automatic updates."
+msgstr "Chặn tất cả kiểm tra cập nhật WordPress core, plugin và theme. Giảm tải máy chủ và ngăn cập nhật tự động."
+
+msgid "Comment Protection"
+msgstr "Bảo Vệ Bình Luận"
+
+msgid "Block spam comments and related features"
+msgstr "Chặn bình luận spam và các tính năng liên quan"
+
+msgid "Disable Comments"
+msgstr "Tắt Bình Luận"
+
+msgid "Completely disables comments across all post types. Removes comment forms, admin menus, and feeds."
+msgstr "Tắt hoàn toàn bình luận trên tất cả loại bài viết. Xóa form bình luận, menu quản trị và feeds."
+
+msgid "Block Pingbacks & Trackbacks"
+msgstr "Chặn Pingback & Trackback"
+
+msgid "Prevents pingback and trackback spam. Removes related headers and methods."
+msgstr "Ngăn chặn spam pingback và trackback. Xóa các header và phương thức liên quan."
+
+msgid "Security Enhancement"
+msgstr "Tăng Cường Bảo Mật"
+
+msgid "Advanced security features and attack prevention"
+msgstr "Tính năng bảo mật nâng cao và ngăn chặn tấn công"
+
+msgid "Disable XML-RPC"
+msgstr "Tắt XML-RPC"
+
+msgid "Blocks XML-RPC functionality to prevent brute force attacks and unauthorized access attempts."
+msgstr "Chặn chức năng XML-RPC để ngăn tấn công brute force và truy cập trái phép."
+
+msgid "Interface Cleanup"
+msgstr "Dọn Dẹp Giao Diện"
+
+msgid "Clean and optimize admin interface"
+msgstr "Dọn dẹp và tối ưu giao diện quản trị"
+
+msgid "Hide Admin Notifications"
+msgstr "Ẩn Thông Báo Quản Trị"
+
+msgid "Removes plugin/theme promotional notifications and admin notices. Creates a cleaner interface."
+msgstr "Xóa thông báo quảng cáo plugin/theme và thông báo quản trị. Tạo giao diện sạch hơn."
+
+msgid "Clean Dashboard"
+msgstr "Dọn Dẹp Dashboard"
+
+msgid "Removes unnecessary dashboard widgets like WordPress news, quick draft, and activity feeds."
+msgstr "Xóa các widget dashboard không cần thiết như tin tức WordPress, bản nháp nhanh và hoạt động."
+
+msgid "Save Settings"
+msgstr "Lưu Cài Đặt"
+
+msgid "Support & Contact"
+msgstr "Hỗ Trợ & Liên Hệ"
+
+msgid "Developer:"
+msgstr "Lập trình viên:"
+
+msgid "Company:"
+msgstr "Công ty:"
+
+msgid "Email:"
+msgstr "Email:"
+
+msgid "Website:"
+msgstr "Website:"
+
+msgid "Support:"
+msgstr "Hỗ trợ:"
+
+msgid "Security & Performance Booster is active: Updates disabled, spam blocked, notifications hidden!"
+msgstr "Tăng Cường Bảo Mật & Hiệu Suất đang hoạt động: Đã tắt cập nhật, chặn spam, ẩn thông báo!"
+
+msgid "WPSPB activation error: "
+msgstr "Lỗi kích hoạt WPSPB: "

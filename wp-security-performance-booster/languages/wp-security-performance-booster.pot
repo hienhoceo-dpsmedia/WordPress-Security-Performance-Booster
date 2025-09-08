@@ -1,0 +1,152 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Security & Performance Booster 1.0.0\n"
+"Report-Msgid-Bugs-To: hello@dps.media\n"
+"POT-Creation-Date: 2024-09-01 12:00+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_x;_n;_nx;esc_attr__;esc_attr_e;esc_html__;esc_html_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wp-security-performance-booster.php
+msgid "Security & Performance Booster"
+msgstr ""
+
+msgid "by"
+msgstr ""
+
+msgid "Settings saved successfully! Features have been updated and are now active."
+msgstr ""
+
+msgid "Language / Ngôn ngữ"
+msgstr ""
+
+msgid "Current Feature Status"
+msgstr ""
+
+msgid "WordPress Updates"
+msgstr ""
+
+msgid "Core, plugins, themes update blocking"
+msgstr ""
+
+msgid "Comments System"
+msgstr ""
+
+msgid "Comment forms and functionality"
+msgstr ""
+
+msgid "XML-RPC Service"
+msgstr ""
+
+msgid "XML-RPC endpoint accessibility"
+msgstr ""
+
+msgid "Admin Notifications"
+msgstr ""
+
+msgid "Plugin/theme promotional messages"
+msgstr ""
+
+msgid "Blocked"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Update Control"
+msgstr ""
+
+msgid "Manage WordPress automatic updates and notifications"
+msgstr ""
+
+msgid "Disable WordPress Updates"
+msgstr ""
+
+msgid "Blocks all WordPress core, plugin, and theme update checks. Reduces server load and prevents automatic updates."
+msgstr ""
+
+msgid "Comment Protection"
+msgstr ""
+
+msgid "Block spam comments and related features"
+msgstr ""
+
+msgid "Disable Comments"
+msgstr ""
+
+msgid "Completely disables comments across all post types. Removes comment forms, admin menus, and feeds."
+msgstr ""
+
+msgid "Block Pingbacks & Trackbacks"
+msgstr ""
+
+msgid "Prevents pingback and trackback spam. Removes related headers and methods."
+msgstr ""
+
+msgid "Security Enhancement"
+msgstr ""
+
+msgid "Advanced security features and attack prevention"
+msgstr ""
+
+msgid "Disable XML-RPC"
+msgstr ""
+
+msgid "Blocks XML-RPC functionality to prevent brute force attacks and unauthorized access attempts."
+msgstr ""
+
+msgid "Interface Cleanup"
+msgstr ""
+
+msgid "Clean and optimize admin interface"
+msgstr ""
+
+msgid "Hide Admin Notifications"
+msgstr ""
+
+msgid "Removes plugin/theme promotional notifications and admin notices. Creates a cleaner interface."
+msgstr ""
+
+msgid "Clean Dashboard"
+msgstr ""
+
+msgid "Removes unnecessary dashboard widgets like WordPress news, quick draft, and activity feeds."
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "Support & Contact"
+msgstr ""
+
+msgid "Developer:"
+msgstr ""
+
+msgid "Company:"
+msgstr ""
+
+msgid "Email:"
+msgstr ""
+
+msgid "Website:"
+msgstr ""
+
+msgid "Support:"
+msgstr ""
+
+msgid "Security & Performance Booster is active: Updates disabled, spam blocked, notifications hidden!"
+msgstr ""

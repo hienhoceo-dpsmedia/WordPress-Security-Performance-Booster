@@ -1,16 +1,12 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Copyright (C) 2025 HỒ QUANG HIỂN
+# This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress Security & Performance Booster 1.0.0\n"
+"Project-Id-Version: WordPress Security & Performance Booster 1.0.10\n"
 "Report-Msgid-Bugs-To: hello@dps.media\n"
-"POT-Creation-Date: 2024-09-01 12:00+0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2025-09-08 12:00+0700\n"
+"PO-Revision-Date: 2025-09-08 12:00+0700\n"
+"Last-Translator: HỒ QUANG HIỂN <hello@dps.media>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -21,132 +17,146 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_x;_n;_nx;esc_attr__;esc_attr_e;esc_html__;esc_html_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wp-security-performance-booster.php
+#: includes/wpspb-core.php:125
 msgid "Security & Performance Booster"
 msgstr ""
 
-msgid "by"
+#: includes/wpspb-core.php:126
+msgid "Security Booster"
 msgstr ""
 
-msgid "Settings saved successfully! Features have been updated and are now active."
+#: includes/wpspb-core.php:303
+msgid "Security Booster"
 msgstr ""
 
-msgid "Language / Ngôn ngữ"
+#: includes/wpspb-core.php:305
+msgid "Security & Performance Booster"
 msgstr ""
 
-msgid "Current Feature Status"
+#: includes/wpspb-core.php:319
+msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-msgid "WordPress Updates"
+#: includes/wpspb-core.php:324
+msgid "Security & Performance Booster"
 msgstr ""
 
-msgid "Core, plugins, themes update blocking"
+#: includes/wpspb-core.php:328
+msgid "Features"
 msgstr ""
 
-msgid "Comments System"
+#: includes/wpspb-core.php:329
+msgid "Updates"
 msgstr ""
 
-msgid "Comment forms and functionality"
+#: includes/wpspb-core.php:330
+msgid "Disable Core Updates"
 msgstr ""
 
-msgid "XML-RPC Service"
+#: includes/wpspb-core.php:330
+msgid "Blocks WordPress core version checks and automatic updates. Use on staging or when you pin WP version. Security updates must be applied manually."
 msgstr ""
 
-msgid "XML-RPC endpoint accessibility"
+#: includes/wpspb-core.php:331
+msgid "Disable Plugin Updates"
 msgstr ""
 
-msgid "Admin Notifications"
+#: includes/wpspb-core.php:331
+msgid "Stops plugin update checks and auto-updates. Useful for controlled deploys or pinned plugin versions."
 msgstr ""
 
-msgid "Plugin/theme promotional messages"
+#: includes/wpspb-core.php:332
+msgid "Disable Theme Updates"
 msgstr ""
 
-msgid "Blocked"
+#: includes/wpspb-core.php:332
+msgid "Stops theme update checks and auto-updates. Use when themes are managed externally or pinned."
 msgstr ""
 
-msgid "Active"
+#: includes/wpspb-core.php:333
+msgid "Comments & Discussion"
 msgstr ""
 
-msgid "Update Control"
+#: includes/wpspb-core.php:334
+msgid "Disable Comments and Trackbacks"
 msgstr ""
 
-msgid "Manage WordPress automatic updates and notifications"
+#: includes/wpspb-core.php:334
+msgid "Removes comment functionality across all post types, disables trackbacks, and cleans related UI."
 msgstr ""
 
-msgid "Disable WordPress Updates"
+#: includes/wpspb-core.php:335
+msgid "Security"
 msgstr ""
 
-msgid "Blocks all WordPress core, plugin, and theme update checks. Reduces server load and prevents automatic updates."
-msgstr ""
-
-msgid "Comment Protection"
-msgstr ""
-
-msgid "Block spam comments and related features"
-msgstr ""
-
-msgid "Disable Comments"
-msgstr ""
-
-msgid "Completely disables comments across all post types. Removes comment forms, admin menus, and feeds."
-msgstr ""
-
-msgid "Block Pingbacks & Trackbacks"
-msgstr ""
-
-msgid "Prevents pingback and trackback spam. Removes related headers and methods."
-msgstr ""
-
-msgid "Security Enhancement"
-msgstr ""
-
-msgid "Advanced security features and attack prevention"
-msgstr ""
-
+#: includes/wpspb-core.php:336
 msgid "Disable XML-RPC"
 msgstr ""
 
-msgid "Blocks XML-RPC functionality to prevent brute force attacks and unauthorized access attempts."
+#: includes/wpspb-core.php:336
+msgid "Blocks the XML-RPC endpoint to reduce brute-force and pingback abuse. Avoid if you rely on apps that need XML-RPC."
 msgstr ""
 
-msgid "Interface Cleanup"
+#: includes/wpspb-core.php:337
+msgid "Disable Pingbacks"
 msgstr ""
 
-msgid "Clean and optimize admin interface"
+#: includes/wpspb-core.php:337
+msgid "Removes pingback headers and XML-RPC pingback methods to mitigate reflection attacks."
 msgstr ""
 
+#: includes/wpspb-core.php:338
+msgid "Admin Experience"
+msgstr ""
+
+#: includes/wpspb-core.php:339
 msgid "Hide Admin Notifications"
 msgstr ""
 
-msgid "Removes plugin/theme promotional notifications and admin notices. Creates a cleaner interface."
+#: includes/wpspb-core.php:339
+msgid "Suppresses most plugin/theme nag notices for a cleaner admin. Use carefully to avoid missing important alerts."
 msgstr ""
 
-msgid "Clean Dashboard"
+#: includes/wpspb-core.php:340
+msgid "Clean Dashboard Widgets"
 msgstr ""
 
-msgid "Removes unnecessary dashboard widgets like WordPress news, quick draft, and activity feeds."
+#: includes/wpspb-core.php:340
+msgid "Removes WordPress news/quick draft/activity widgets to reduce clutter and improve load time."
 msgstr ""
 
-msgid "Save Settings"
+#: includes/wpspb-core.php:344
+msgid "Language"
 msgstr ""
 
-msgid "Support & Contact"
+#: includes/wpspb-core.php:346
+msgid "Plugin Language"
 msgstr ""
 
-msgid "Developer:"
+#: includes/wpspb-core.php:350
+msgid "Auto (use site language)"
 msgstr ""
 
-msgid "Company:"
+#: includes/wpspb-core.php:351
+msgid "Vietnamese (Tiếng Việt)"
 msgstr ""
 
-msgid "Email:"
+#: includes/wpspb-core.php:352
+msgid "English (US)"
 msgstr ""
 
-msgid "Website:"
+#: includes/wpspb-core.php:353
+msgid "German (Deutsch)"
 msgstr ""
 
-msgid "Support:"
+#: includes/wpspb-core.php:354
+msgid "French (Français)"
 msgstr ""
 
-msgid "Security & Performance Booster is active: Updates disabled, spam blocked, notifications hidden!"
+#: wp-security-performance-booster.php:33
+msgid "WordPress Security & Performance Booster requires PHP 7.4 or higher. Please upgrade PHP."
+msgstr ""
+
+#: wp-security-performance-booster.php:61
+msgid "WPSPB activation error: "
 msgstr ""
