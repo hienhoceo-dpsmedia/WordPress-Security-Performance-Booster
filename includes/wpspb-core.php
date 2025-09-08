@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WPSPB_VERSION' ) ) {
-    define( 'WPSPB_VERSION', '1.0.6' );
+    define( 'WPSPB_VERSION', '1.0.7' );
 }
 
 if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {

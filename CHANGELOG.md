@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.7] - 2025-09-08
+
+### Added
+- Granular update controls: separate toggles for core, plugin, and theme updates
+- Descriptive settings groups with "what it does" and "when to use" guidance
+
+### Changed
+- Conditional HTTP and cron blocking based on selected update channels
+- Auto-migration from legacy single "disable_updates" to granular flags
+
 ## [1.0.6] - 2025-09-08
 
 ### Fixed
