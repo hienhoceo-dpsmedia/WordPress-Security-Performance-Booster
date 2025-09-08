@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2025-09-08
+
+### Changed
+- Major refactor: split plugin into a PHP 5.2–safe loader (main file) and a core file under `includes/`. This prevents parse errors on older PHP and ensures clean activation behavior.
+
+### Fixed
+- Converted remaining short array usages in hook callbacks to long array syntax.
+- Maintained activation/deactivation/uninstall behavior through loader wrappers.
+
 ## [1.0.4] - 2025-09-08
 
 ### Fixed
