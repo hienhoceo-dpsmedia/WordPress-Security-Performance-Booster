@@ -3070,8 +3070,19 @@ if ( function_exists( 'register_activation_hook' ) ) {
         if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
             return;
         }
-        if ( class_exists( 'WP_Security_Performance_Booster' ) ) {
-            WP_Security_Performance_Booster::get_instance()->activate();
+        try {
+            if ( class_exists( 'WP_Security_Performance_Booster' ) ) {
+                WP_Security_Performance_Booster::get_instance()->activate();
+            }
+        } catch ( \Throwable $e ) {
+            // Store error for admin notice and debugging
+            $message = 'WPSPB activation error: ' . $e->getMessage();
+            if ( function_exists( 'update_option' ) ) {
+                update_option( 'wpspb_last_activation_error', $message );
+            }
+            if ( function_exists( 'error_log' ) ) {
+                error_log( $message );
+            }
         }
     }
     }
@@ -3094,6 +3105,18 @@ if ( function_exists( 'register_activation_hook' ) ) {
     }
     }
     register_uninstall_hook( __FILE__, 'wpspb_do_uninstall' );
+}
+
+// Show a one-time admin notice if activation captured an error
+if ( ! function_exists( 'wpspb_show_activation_error_notice' ) ) {
+    function wpspb_show_activation_error_notice() {
+        $msg = get_option( 'wpspb_last_activation_error' );
+        if ( ! empty( $msg ) ) {
+            echo '<div class="notice notice-error"><p>' . esc_html( $msg ) . '</p></div>';
+            delete_option( 'wpspb_last_activation_error' );
+        }
+    }
+    add_action( 'admin_notices', 'wpspb_show_activation_error_notice' );
 }
 
 /**
