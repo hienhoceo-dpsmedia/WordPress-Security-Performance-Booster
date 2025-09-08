@@ -11,7 +11,7 @@
  *
  * @package WordPress_Plugins
  * @subpackage WP_Security_Performance_Booster
- * @version 1.0.1
+ * @version 1.0.2
  * @author HỒ QUANG HIỂN <hello@dps.media>
  * @copyright 2024 DPS.MEDIA
  * @license GPL-2.0-or-later
@@ -21,7 +21,7 @@
  * Plugin Name: WordPress Security & Performance Booster
  * Plugin URI:  https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster
  * Description: Comprehensive security and performance enhancement plugin that disables updates, prevents spam (comments, pingbacks, trackbacks, XML-RPC), reduces server load, and cleans notification spam. Perfect for expert users and development environments.
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      HỒ QUANG HIỂN
  * Author URI:  https://dps.media/
  * Text Domain: wp-security-performance-booster
@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Define the plugin version
  */
 if ( ! defined( 'WPSPB_VERSION' ) ) {
-    define( 'WPSPB_VERSION', '1.0.1' );
+    define( 'WPSPB_VERSION', '1.0.2' );
 }
 
 /**
@@ -266,7 +266,8 @@ class WP_Security_Performance_Booster {
 		
 		// Debug logging for activation
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			error_log( 'WPSPB: Plugin activated with default settings - ' . wp_json_encode( $default_settings ) );
+            $json = function_exists( 'wp_json_encode' ) ? wp_json_encode( $default_settings ) : json_encode( $default_settings );
+            error_log( 'WPSPB: Plugin activated with default settings - ' . $json );
 		}
 		
 		// Flush rewrite rules
@@ -410,7 +411,8 @@ class WP_Security_Performance_Booster {
 		
 		// Debug logging for admin_init method
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			error_log( 'WPSPB: Admin init method called with settings - ' . wp_json_encode( $settings ) );
+            $json = function_exists( 'wp_json_encode' ) ? wp_json_encode( $settings ) : json_encode( $settings );
+            error_log( 'WPSPB: Admin init method called with settings - ' . $json );
 		}
 		
 		// Apply settings-based functionality
@@ -458,7 +460,8 @@ class WP_Security_Performance_Booster {
 		
 		// Debug logging for feature initialization
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			error_log( 'WPSPB: Re-initializing features with settings - ' . wp_json_encode( $settings ) );
+            $json = function_exists( 'wp_json_encode' ) ? wp_json_encode( $settings ) : json_encode( $settings );
+            error_log( 'WPSPB: Re-initializing features with settings - ' . $json );
 		}
 		
 		// Only initialize features if they are enabled in settings
@@ -1820,10 +1823,12 @@ class WP_Security_Performance_Booster {
 		
 		// Log settings change for debugging
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			error_log( 'WordPress Security & Performance Booster: Settings updated - ' . wp_json_encode( $sanitized ) );
+            $json_sanitized = function_exists( 'wp_json_encode' ) ? wp_json_encode( $sanitized ) : json_encode( $sanitized );
+            error_log( 'WordPress Security & Performance Booster: Settings updated - ' . $json_sanitized );
 			
 			// Log raw input for debugging
-			error_log( 'WordPress Security & Performance Booster: Raw input - ' . wp_json_encode( $input ) );
+            $json_input = function_exists( 'wp_json_encode' ) ? wp_json_encode( $input ) : json_encode( $input );
+            error_log( 'WordPress Security & Performance Booster: Raw input - ' . $json_input );
 		}
 		
 		return $sanitized;
@@ -2199,8 +2204,10 @@ class WP_Security_Performance_Booster {
 			
 			// Debug logging for form submission
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				error_log( 'WPSPB Settings Update - Old: ' . wp_json_encode( $old_settings ) );
-				error_log( 'WPSPB Settings Update - New: ' . wp_json_encode( $settings ) );
+                    $old_json = function_exists( 'wp_json_encode' ) ? wp_json_encode( $old_settings ) : json_encode( $old_settings );
+                    $new_json = function_exists( 'wp_json_encode' ) ? wp_json_encode( $settings ) : json_encode( $settings );
+                    error_log( 'WPSPB Settings Update - Old: ' . $old_json );
+                    error_log( 'WPSPB Settings Update - New: ' . $new_json );
 			}
 			
 			// Check if updates setting changed from enabled to disabled
