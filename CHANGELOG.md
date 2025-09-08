@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.8] - 2025-09-08
+
+### Added
+- Language selector to force plugin UI language (Auto/vi/en_US/de_DE/fr_FR)
+- Improved textdomain loading honoring the selected locale
+- Docs note: disabling background checks reduces CPU/RAM usage on VPS/shared hosts
+
 ## [1.0.7] - 2025-09-08
 
 ### Added
