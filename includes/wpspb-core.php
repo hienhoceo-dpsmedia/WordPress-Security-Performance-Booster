@@ -33,6 +33,8 @@ class WP_Security_Performance_Booster {
         'hide_notifications'     => false,
         'disable_pingbacks'      => false,
         'clean_dashboard'        => false,
+        // Language override: auto, vi, en_US, de_DE, fr_FR
+        'plugin_locale'          => 'auto',
     );
 
     public static function get_instance() {
@@ -101,7 +103,18 @@ class WP_Security_Performance_Booster {
     }
 
     public function load_textdomain() {
-        load_plugin_textdomain( 'wp-security-performance-booster', false, dirname( plugin_basename( __FILE__ ) ) . '/../languages' );
+        $domain = 'wp-security-performance-booster';
+        $settings = $this->get_settings();
+        $locale = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
+        if ( ! empty( $settings['plugin_locale'] ) && 'auto' !== $settings['plugin_locale'] ) {
+            $locale = $settings['plugin_locale'];
+        }
+        $mofile = plugin_dir_path( __FILE__ ) . '../languages/' . $domain . '-' . $locale . '.mo';
+        if ( file_exists( $mofile ) ) {
+            load_textdomain( $domain, $mofile );
+        } else {
+            load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/../languages' );
+        }
     }
 
     public function register_settings() {
@@ -326,6 +339,33 @@ class WP_Security_Performance_Booster {
                     <h3><?php echo esc_html__( 'Admin Experience', 'wp-security-performance-booster' ); ?></h3>
                     <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[hide_notifications]" value="1" <?php checked( ! empty( $settings['hide_notifications'] ) ); ?> /> <?php echo esc_html__( 'Hide Admin Notifications', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Suppresses most plugin/theme nag notices for a cleaner admin. Use carefully to avoid missing important alerts.', 'wp-security-performance-booster' ); ?></span></p>
                     <p><label><input type="checkbox" name="<?php echo esc_attr( $this->option_key ); ?>[clean_dashboard]" value="1" <?php checked( ! empty( $settings['clean_dashboard'] ) ); ?> /> <?php echo esc_html__( 'Clean Dashboard Widgets', 'wp-security-performance-booster' ); ?></label><br /><span class="description"><?php echo esc_html__( 'Removes WordPress news/quick draft/activity widgets to reduce clutter and improve load time.', 'wp-security-performance-booster' ); ?></span></p>
+                </div>
+
+                <div class="wpspb-card" style="margin-top:16px">
+                    <h2><?php echo esc_html__( 'Language', 'wp-security-performance-booster' ); ?></h2>
+                    <p>
+                        <label for="wpspb_lang"><?php echo esc_html__( 'Plugin Language', 'wp-security-performance-booster' ); ?></label><br />
+                        <select name="<?php echo esc_attr( $this->option_key ); ?>[plugin_locale]" id="wpspb_lang">
+                            <?php
+                            $opts = array(
+                                'auto'  => __( 'Auto (use site language)', 'wp-security-performance-booster' ),
+                                'vi'    => __( 'Vietnamese (Tiếng Việt)', 'wp-security-performance-booster' ),
+                                'en_US' => __( 'English (US)', 'wp-security-performance-booster' ),
+                                'de_DE' => __( 'German (Deutsch)', 'wp-security-performance-booster' ),
+                                'fr_FR' => __( 'French (Français)', 'wp-security-performance-booster' ),
+                            );
+                            foreach ( $opts as $code => $label ) {
+                                printf(
+                                    '<option value="%s" %s>%s</option>',
+                                    esc_attr( $code ),
+                                    selected( $settings['plugin_locale'], $code, false ),
+                                    esc_html( $label )
+                                );
+                            }
+                            ?>
+                        </select>
+                        <span class="description"><?php echo esc_html__( 'Override the plugin UI language regardless of the site setting. Requires corresponding translation files.', 'wp-security-performance-booster' ); ?></span>
+                    </p>
                 </div>
                 <?php submit_button(); ?>
             </form>
