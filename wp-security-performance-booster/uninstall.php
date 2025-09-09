@@ -29,23 +29,23 @@ if ( __FILE__ != WP_UNINSTALL_PLUGIN ) {
  * Delete plugin options
  *
  * Remove all stored plugin settings and options from the database
+ * NOTE: For security plugins, settings should be preserved during upgrades
  */
 function wpspb_cleanup_options() {
-	// Delete main plugin settings
-	delete_option( 'wpspb_settings' );
+	// IMPORTANT: Preserve user settings during upgrades
+	// Only delete version tracking and temporary data
 	delete_option( 'wpspb_version' );
-	delete_option( 'wpspb_language' );
 	delete_option( 'wpspb_last_db_check' );
 	delete_option( 'wpspb_last_autoload_optimization' );
 	
-	// Delete legacy options from older versions
-	delete_option( 'wp_security_booster_settings' );
-	delete_option( 'wpspb_old_settings' );
+	// Delete only temporary/legacy options that shouldn't persist
 	delete_option( 'wpspb_first_install' );
 	delete_option( 'wpspb_activation_time' );
 	delete_option( 'wpspb_activation_time_old' );
-	delete_option( 'security_performance_booster_options' );
+	delete_option( 'wpspb_old_settings' );
 	delete_option( 'wpspb_legacy_options' );
+	
+	// NOTE: wpspb_settings and wpspb_language are preserved to maintain user preferences
 	
 	// Delete any cached transients
 	delete_transient( 'wpspb_cache' );

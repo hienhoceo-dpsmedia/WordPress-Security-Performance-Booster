@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WPSPB_VERSION' ) ) {
-    define( 'WPSPB_VERSION', '1.0.12' );
+    define( 'WPSPB_VERSION', '1.0.13' );
 }
 
 if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
@@ -59,9 +59,17 @@ class WP_Security_Performance_Booster {
         if ( ! current_user_can( 'activate_plugins' ) ) {
             return;
         }
-        if ( false === get_option( $this->option_key, false ) ) {
+        
+        // Check if this is an upgrade or fresh install
+        $existing_settings = get_option( $this->option_key, false );
+        if ( false === $existing_settings ) {
+            // Fresh install - use defaults
             add_option( $this->option_key, $this->defaults );
+        } else {
+            // Upgrade - merge existing settings with new defaults
+            $this->upgrade_settings( $existing_settings );
         }
+        
         update_option( 'wpspb_version', WPSPB_VERSION );
 
         // Clear update-related transients for a clean slate
@@ -73,6 +81,40 @@ class WP_Security_Performance_Booster {
         delete_transient( 'update_themes' );
 
         flush_rewrite_rules();
+    }
+    
+    /**
+     * Upgrade settings when plugin version changes
+     * 
+     * @param array $existing_settings Existing user settings
+     */
+    private function upgrade_settings( $existing_settings ) {
+        $old_version = get_option( 'wpspb_version', '1.0.0' );
+        
+        // Ensure all new settings keys exist
+        $updated_settings = array_merge( $this->defaults, $existing_settings );
+        
+        // Version-specific migrations
+        if ( version_compare( $old_version, '1.0.7', '<' ) ) {
+            // Migrate from old single toggle to granular controls
+            if ( isset( $updated_settings['disable_updates'] ) ) {
+                $flag = (bool) $updated_settings['disable_updates'];
+                unset( $updated_settings['disable_updates'] );
+                $updated_settings['disable_core_updates'] = $flag;
+                $updated_settings['disable_plugin_updates'] = $flag;
+                $updated_settings['disable_theme_updates'] = $flag;
+            }
+        }
+        
+        if ( version_compare( $old_version, '1.0.8', '<' ) ) {
+            // Add language setting if not exists
+            if ( ! isset( $updated_settings['plugin_locale'] ) ) {
+                $updated_settings['plugin_locale'] = 'auto';
+            }
+        }
+        
+        // Update the settings
+        update_option( $this->option_key, $updated_settings );
     }
 
     public function deactivate() {
@@ -106,6 +148,8 @@ class WP_Security_Performance_Booster {
 
     public function load_textdomain() {
         $domain = 'wp-security-performance-booster';
+        
+        // Get settings first
         $settings = $this->get_settings();
         
         // Determine the locale to use
@@ -114,19 +158,21 @@ class WP_Security_Performance_Booster {
             $locale = $settings['plugin_locale'];
         }
         
-        // Unload textdomain first to force reload with new locale
+        // Force unload textdomain first
         unload_textdomain( $domain );
         
-        // Try to load the specific language file
+        // Try to load the specific language file with absolute path
         $mofile = plugin_dir_path( __FILE__ ) . '../languages/' . $domain . '-' . $locale . '.mo';
         if ( file_exists( $mofile ) ) {
-            $loaded = load_textdomain( $domain, $mofile );
+            $loaded = load_textdomain( $domain, $mofile, $locale );
             if ( $loaded ) {
-                return; // Successfully loaded
+                // Also try to load via standard method for compatibility
+                load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/../languages' );
+                return;
             }
         }
         
-        // Fallback to default WordPress language loading
+        // Fallback to standard WordPress loading
         load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/../languages' );
     }
 
@@ -145,6 +191,9 @@ class WP_Security_Performance_Booster {
             'wpspb-settings',
             array( $this, 'render_settings_page' )
         );
+        
+        // Reload textdomain when admin menu is accessed to ensure translations are current
+        add_action( 'load-settings_page_wpspb-settings', array( $this, 'load_textdomain' ) );
     }
 
     public function admin_enqueue( $hook ) {

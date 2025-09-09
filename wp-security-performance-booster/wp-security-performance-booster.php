@@ -3,7 +3,7 @@
  * Plugin Name: WordPress Security & Performance Booster
  * Plugin URI:  https://github.com/hienhoceo-dpsmedia/WordPress-Security-Performance-Booster
  * Description: Comprehensive security and performance enhancement plugin that disables updates, prevents spam (comments, pingbacks, trackbacks, XML-RPC), reduces server load, and cleans notification spam. Perfect for expert users and development environments.
- * Version:     1.0.12
+ * Version:     1.0.13
  * Author:      H? QUANG HI?N
  * Author URI:  https://dps.media/
  * Text Domain: wp-security-performance-booster
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Define version constant (simple string)
 if ( ! defined( 'WPSPB_VERSION' ) ) {
-    define( 'WPSPB_VERSION', '1.0.12' );
+    define( 'WPSPB_VERSION', '1.0.13' );
 }
 
 // Minimal, PHP-5.2-compatible loader. Do not use short arrays or modern syntax here.

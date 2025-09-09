@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.13] - 2025-09-09
+
+### Fixed
+- **CRITICAL FIX**: Plugin upgrade process - no more data loss during updates!
+- Fixed Vietnamese translation not displaying despite language selection
+- Improved textdomain loading with proper locale parameter
+- Added multiple reload points for translations to ensure they work
+- Fixed settings migration during plugin upgrades
+- Preserved user settings during plugin activation/upgrade cycles
+
+### Added
+- Comprehensive upgrade migration system for settings
+- Enhanced textdomain loading with admin menu reload hook
+- Better compatibility with different WordPress versions
+- Improved error handling for translation loading
+
+### Technical Improvements
+- Settings are now properly preserved during plugin upgrades
+- Translation files load correctly on first attempt
+- Admin interface translations work immediately after language change
+- Backward compatibility with older plugin versions
+
 ## [1.0.12] - 2025-09-09
 
 ### Fixed
