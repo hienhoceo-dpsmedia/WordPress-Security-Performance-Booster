@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WPSPB_VERSION' ) ) {
-    define( 'WPSPB_VERSION', '1.0.10' );
+    define( 'WPSPB_VERSION', '1.0.12' );
 }
 
 if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
@@ -45,7 +45,9 @@ class WP_Security_Performance_Booster {
     }
 
     private function __construct() {
-        add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+        // Load textdomain early to ensure translations are available
+        $this->load_textdomain();
+        
         add_action( 'admin_init', array( $this, 'register_settings' ) );
         add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
@@ -105,20 +107,34 @@ class WP_Security_Performance_Booster {
     public function load_textdomain() {
         $domain = 'wp-security-performance-booster';
         $settings = $this->get_settings();
+        
+        // Determine the locale to use
         $locale = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
         if ( ! empty( $settings['plugin_locale'] ) && 'auto' !== $settings['plugin_locale'] ) {
             $locale = $settings['plugin_locale'];
         }
+        
+        // Unload textdomain first to force reload with new locale
+        unload_textdomain( $domain );
+        
+        // Try to load the specific language file
         $mofile = plugin_dir_path( __FILE__ ) . '../languages/' . $domain . '-' . $locale . '.mo';
         if ( file_exists( $mofile ) ) {
-            load_textdomain( $domain, $mofile );
-        } else {
-            load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/../languages' );
+            $loaded = load_textdomain( $domain, $mofile );
+            if ( $loaded ) {
+                return; // Successfully loaded
+            }
         }
+        
+        // Fallback to default WordPress language loading
+        load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/../languages' );
     }
 
     public function register_settings() {
         register_setting( $this->option_key, $this->option_key, array( $this, 'sanitize_settings' ) );
+        
+        // Add action to reload textdomain when settings are updated
+        add_action( 'update_option_' . $this->option_key, array( $this, 'reload_textdomain_on_save' ), 10, 2 );
     }
 
     public function add_admin_menu() {
@@ -313,6 +329,16 @@ class WP_Security_Performance_Booster {
             $clean[ $key ] = isset( $input[ $key ] ) ? (bool) $input[ $key ] : false;
         }
         return $clean;
+    }
+    
+    public function reload_textdomain_on_save( $old_value, $new_value ) {
+        // Check if language setting has changed
+        if ( isset( $old_value['plugin_locale'] ) && isset( $new_value['plugin_locale'] ) ) {
+            if ( $old_value['plugin_locale'] !== $new_value['plugin_locale'] ) {
+                // Force reload textdomain with new locale
+                $this->load_textdomain();
+            }
+        }
     }
 
     public function render_settings_page() {

@@ -5,13 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.12] - 2025-09-09
+
+### Fixed
+- **Critical Fix**: Language switching functionality now works correctly
+- Fixed textdomain loading timing issue that prevented translations from displaying
+- Added proper textdomain unloading and reloading when language settings change
+- Improved language detection and loading mechanism
+- Added real-time language switching without requiring plugin deactivation/reactivation
+
+### Added
+- Language change detection system that reloads translations automatically
+- Better error handling for missing translation files
+- Improved textdomain loading with proper fallback mechanisms
+
+## [1.0.11] - 2025-09-08
+
+### Added
+- Complete Vietnamese translation updates for all plugin strings
+- Updated POT template file with all current translatable strings
+- Improved language files with proper encoding and metadata
+
+### Fixed
+- Fixed version mismatch between plugin files and readme.txt
+- Updated version numbers to 1.0.11 for consistency across all files
+- Resolved potential activation issues caused by version inconsistencies
+
 ## [1.0.10] - 2025-09-08
 
 ### Fixed
 - Fixed version mismatch between plugin files and readme.txt
 - Updated version numbers to 1.0.10 for consistency across all files
 - Resolved potential activation issues caused by version inconsistencies
-- Fixed missing language files in distribution package
 
 ## [1.0.9] - 2025-09-08
 

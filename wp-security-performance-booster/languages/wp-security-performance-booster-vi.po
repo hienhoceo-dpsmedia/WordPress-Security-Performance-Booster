@@ -1,14 +1,14 @@
 # Vietnamese translation for WordPress Security & Performance Booster
-# Copyright (C) 2024 HỒ QUANG HIỂN
+# Copyright (C) 2025 HỒ QUANG HIỂN
 # This file is distributed under the GPL v2 or later.
-# Translator: HỒ QUANG HIỂN <hello@dps.media>, 2024.
+# Translator: HỒ QUANG HIỂN <hello@dps.media>, 2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress Security & Performance Booster 1.0.0\n"
+"Project-Id-Version: WordPress Security & Performance Booster 1.0.10\n"
 "Report-Msgid-Bugs-To: hello@dps.media\n"
-"POT-Creation-Date: 2024-09-01 12:00+0700\n"
-"PO-Revision-Date: 2024-09-01 12:00+0700\n"
+"POT-Creation-Date: 2025-09-08 12:00+0700\n"
+"PO-Revision-Date: 2025-09-08 12:00+0700\n"
 "Last-Translator: HỒ QUANG HIỂN <hello@dps.media>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi\n"
@@ -21,135 +21,146 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_x;_n;_nx;esc_attr__;esc_attr_e;esc_html__;esc_html_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wp-security-performance-booster.php
+#: includes/wpspb-core.php:125
 msgid "Security & Performance Booster"
 msgstr "Tăng Cường Bảo Mật & Hiệu Suất"
 
-msgid "by"
-msgstr "bởi"
-
-msgid "Settings saved successfully! Features have been updated and are now active."
-msgstr "Cài đặt đã được lưu thành công! Các tính năng đã được cập nhật và hiện đang hoạt động."
-
-msgid "Language / Ngôn ngữ"
-msgstr "Ngôn ngữ / Language"
-
-msgid "Current Feature Status"
-msgstr "Trạng Thái Tính Năng Hiện Tại"
-
-msgid "WordPress Updates"
-msgstr "Cập Nhật WordPress"
-
-msgid "Core, plugins, themes update blocking"
-msgstr "Chặn cập nhật core, plugin, theme"
-
-msgid "Comments System"
-msgstr "Hệ Thống Bình Luận"
-
-msgid "Comment forms and functionality"
-msgstr "Form bình luận và chức năng"
-
-msgid "XML-RPC Service"
-msgstr "Dịch Vụ XML-RPC"
-
-msgid "XML-RPC endpoint accessibility"
-msgstr "Khả năng truy cập endpoint XML-RPC"
-
-msgid "Admin Notifications"
-msgstr "Thông Báo Quản Trị"
-
-msgid "Plugin/theme promotional messages"
-msgstr "Thông báo quảng cáo plugin/theme"
-
-msgid "Blocked"
-msgstr "Đã Chặn"
-
-msgid "Active"
-msgstr "Hoạt Động"
-
-msgid "Update Control"
-msgstr "Kiểm Soát Cập Nhật"
-
-msgid "Manage WordPress automatic updates and notifications"
-msgstr "Quản lý cập nhật tự động và thông báo WordPress"
-
-msgid "Disable WordPress Updates"
-msgstr "Tắt Cập Nhật WordPress"
-
-msgid "Blocks all WordPress core, plugin, and theme update checks. Reduces server load and prevents automatic updates."
-msgstr "Chặn tất cả kiểm tra cập nhật WordPress core, plugin và theme. Giảm tải máy chủ và ngăn cập nhật tự động."
-
-msgid "Comment Protection"
-msgstr "Bảo Vệ Bình Luận"
-
-msgid "Block spam comments and related features"
-msgstr "Chặn bình luận spam và các tính năng liên quan"
-
-msgid "Disable Comments"
-msgstr "Tắt Bình Luận"
-
-msgid "Completely disables comments across all post types. Removes comment forms, admin menus, and feeds."
-msgstr "Tắt hoàn toàn bình luận trên tất cả loại bài viết. Xóa form bình luận, menu quản trị và feeds."
-
-msgid "Block Pingbacks & Trackbacks"
-msgstr "Chặn Pingback & Trackback"
-
-msgid "Prevents pingback and trackback spam. Removes related headers and methods."
-msgstr "Ngăn chặn spam pingback và trackback. Xóa các header và phương thức liên quan."
-
-msgid "Security Enhancement"
+#: includes/wpspb-core.php:126
+msgid "Security Booster"
 msgstr "Tăng Cường Bảo Mật"
 
-msgid "Advanced security features and attack prevention"
-msgstr "Tính năng bảo mật nâng cao và ngăn chặn tấn công"
+#: includes/wpspb-core.php:303
+msgid "Security Booster"
+msgstr "Tăng Cường Bảo Mật"
 
+#: includes/wpspb-core.php:305
+msgid "Security & Performance Booster"
+msgstr "Tăng Cường Bảo Mật & Hiệu Suất"
+
+#: includes/wpspb-core.php:319
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Bạn không có đủ quyền để truy cập trang này."
+
+#: includes/wpspb-core.php:324
+msgid "Security & Performance Booster"
+msgstr "Tăng Cường Bảo Mật & Hiệu Suất"
+
+#: includes/wpspb-core.php:328
+msgid "Features"
+msgstr "Tính Năng"
+
+#: includes/wpspb-core.php:329
+msgid "Updates"
+msgstr "Cập Nhật"
+
+#: includes/wpspb-core.php:330
+msgid "Disable Core Updates"
+msgstr "Tắt Cập Nhật Core"
+
+#: includes/wpspb-core.php:330
+msgid "Blocks WordPress core version checks and automatic updates. Use on staging or when you pin WP version. Security updates must be applied manually."
+msgstr "Chặn kiểm tra phiên bản core WordPress và cập nhật tự động. Sử dụng trên staging hoặc khi bạn cố định phiên bản WP. Cập nhật bảo mật phải được áp dụng thủ công."
+
+#: includes/wpspb-core.php:331
+msgid "Disable Plugin Updates"
+msgstr "Tắt Cập Nhật Plugin"
+
+#: includes/wpspb-core.php:331
+msgid "Stops plugin update checks and auto-updates. Useful for controlled deploys or pinned plugin versions."
+msgstr "Dừng kiểm tra cập nhật plugin và tự động cập nhật. Hữu ích cho các lần triển khai được kiểm soát hoặc các phiên bản plugin được cố định."
+
+#: includes/wpspb-core.php:332
+msgid "Disable Theme Updates"
+msgstr "Tắt Cập Nhật Theme"
+
+#: includes/wpspb-core.php:332
+msgid "Stops theme update checks and auto-updates. Use when themes are managed externally or pinned."
+msgstr "Dừng kiểm tra cập nhật theme và tự động cập nhật. Sử dụng khi theme được quản lý bên ngoài hoặc được cố định."
+
+#: includes/wpspb-core.php:333
+msgid "Comments & Discussion"
+msgstr "Bình Luận & Thảo Luận"
+
+#: includes/wpspb-core.php:334
+msgid "Disable Comments and Trackbacks"
+msgstr "Tắt Bình Luận và Trackback"
+
+#: includes/wpspb-core.php:334
+msgid "Removes comment functionality across all post types, disables trackbacks, and cleans related UI."
+msgstr "Xóa chức năng bình luận trên tất cả các loại bài viết, tắt trackback và dọn dẹp giao diện liên quan."
+
+#: includes/wpspb-core.php:335
+msgid "Security"
+msgstr "Bảo Mật"
+
+#: includes/wpspb-core.php:336
 msgid "Disable XML-RPC"
 msgstr "Tắt XML-RPC"
 
-msgid "Blocks XML-RPC functionality to prevent brute force attacks and unauthorized access attempts."
-msgstr "Chặn chức năng XML-RPC để ngăn tấn công brute force và truy cập trái phép."
+#: includes/wpspb-core.php:336
+msgid "Blocks the XML-RPC endpoint to reduce brute-force and pingback abuse. Avoid if you rely on apps that need XML-RPC."
+msgstr "Chặn endpoint XML-RPC để giảm thiểu lạm dụng brute-force và pingback. Tránh sử dụng nếu bạn dựa vào các ứng dụng cần XML-RPC."
 
-msgid "Interface Cleanup"
-msgstr "Dọn Dẹp Giao Diện"
+#: includes/wpspb-core.php:337
+msgid "Disable Pingbacks"
+msgstr "Tắt Pingback"
 
-msgid "Clean and optimize admin interface"
-msgstr "Dọn dẹp và tối ưu giao diện quản trị"
+#: includes/wpspb-core.php:337
+msgid "Removes pingback headers and XML-RPC pingback methods to mitigate reflection attacks."
+msgstr "Xóa header pingback và phương thức pingback XML-RPC để giảm thiểu các cuộc tấn công phản chiếu."
 
+#: includes/wpspb-core.php:338
+msgid "Admin Experience"
+msgstr "Trải Nghiệm Quản Trị"
+
+#: includes/wpspb-core.php:339
 msgid "Hide Admin Notifications"
 msgstr "Ẩn Thông Báo Quản Trị"
 
-msgid "Removes plugin/theme promotional notifications and admin notices. Creates a cleaner interface."
-msgstr "Xóa thông báo quảng cáo plugin/theme và thông báo quản trị. Tạo giao diện sạch hơn."
+#: includes/wpspb-core.php:339
+msgid "Suppresses most plugin/theme nag notices for a cleaner admin. Use carefully to avoid missing important alerts."
+msgstr "Ẩn hầu hết các thông báo nhắc nhở plugin/theme để có giao diện quản trị sạch sẽ hơn. Sử dụng cẩn thận để tránh bỏ lỡ các cảnh báo quan trọng."
 
-msgid "Clean Dashboard"
-msgstr "Dọn Dẹp Dashboard"
+#: includes/wpspb-core.php:340
+msgid "Clean Dashboard Widgets"
+msgstr "Dọn Dẹp Widget Dashboard"
 
-msgid "Removes unnecessary dashboard widgets like WordPress news, quick draft, and activity feeds."
-msgstr "Xóa các widget dashboard không cần thiết như tin tức WordPress, bản nháp nhanh và hoạt động."
+#: includes/wpspb-core.php:340
+msgid "Removes WordPress news/quick draft/activity widgets to reduce clutter and improve load time."
+msgstr "Xóa các widget tin tức WordPress/bản nháp nhanh/hoạt động để giảm độ lộn xộn và cải thiện thời gian tải."
 
-msgid "Save Settings"
-msgstr "Lưu Cài Đặt"
+#: includes/wpspb-core.php:344
+msgid "Language"
+msgstr "Ngôn Ngữ"
 
-msgid "Support & Contact"
-msgstr "Hỗ Trợ & Liên Hệ"
+#: includes/wpspb-core.php:346
+msgid "Plugin Language"
+msgstr "Ngôn Ngữ Plugin"
 
-msgid "Developer:"
-msgstr "Lập trình viên:"
+#: includes/wpspb-core.php:350
+msgid "Auto (use site language)"
+msgstr "Tự động (sử dụng ngôn ngữ trang web)"
 
-msgid "Company:"
-msgstr "Công ty:"
+#: includes/wpspb-core.php:351
+msgid "Vietnamese (Tiếng Việt)"
+msgstr "Tiếng Việt"
 
-msgid "Email:"
-msgstr "Email:"
+#: includes/wpspb-core.php:352
+msgid "English (US)"
+msgstr "Tiếng Anh (US)"
 
-msgid "Website:"
-msgstr "Website:"
+#: includes/wpspb-core.php:353
+msgid "German (Deutsch)"
+msgstr "Tiếng Đức (Deutsch)"
 
-msgid "Support:"
-msgstr "Hỗ trợ:"
+#: includes/wpspb-core.php:354
+msgid "French (Français)"
+msgstr "Tiếng Pháp (Français)"
 
-msgid "Security & Performance Booster is active: Updates disabled, spam blocked, notifications hidden!"
-msgstr "Tăng Cường Bảo Mật & Hiệu Suất đang hoạt động: Đã tắt cập nhật, chặn spam, ẩn thông báo!"
+#: wp-security-performance-booster.php:33
+msgid "WordPress Security & Performance Booster requires PHP 7.4 or higher. Please upgrade PHP."
+msgstr "WordPress Security & Performance Booster yêu cầu PHP 7.4 trở lên. Vui lòng nâng cấp PHP."
 
+#: wp-security-performance-booster.php:61
 msgid "WPSPB activation error: "
 msgstr "Lỗi kích hoạt WPSPB: "
