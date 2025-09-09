@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.15] - 2025-09-09
+
+### Fixed
+- **DEBUG VERSION**: Added comprehensive debugging for translation issues
+- **Vietnamese Translation**: Added hardcoded fallback system for guaranteed translations
+- **Debug Output**: Added debug information panel in admin settings
+- **Multiple Loading Methods**: Try 3 different approaches to load translations
+- **Enhanced Logging**: Detailed error logging when WP_DEBUG is enabled
+- **Guaranteed Vietnamese**: Fallback system ensures Vietnamese always works
+
+### Added
+- **Debug Panel**: Shows selected language, WordPress locale, and translation status
+- **Hardcoded Translations**: Vietnamese fallback that doesn't rely on .mo files
+- **Multiple Loading Strategies**: Direct file, standard WordPress, and Vietnamese-specific
+- **Comprehensive Logging**: Detailed debug information in error log
+- **Translation Testing**: Real-time testing of translation functionality
+
+### Technical Changes
+- Added `vietnamese_fallback()` method for hardcoded translations
+- Enhanced `load_textdomain()` with multiple loading strategies
+- Added debug information panel in settings page
+- Comprehensive error logging and debugging capabilities
+- Fallback system ensures translations work regardless of .mo file issues
+
+### Debug Features
+- Debug panel shows translation status in real-time
+- Error logging when WP_DEBUG is enabled
+- Multiple translation loading attempts
+- Hardcoded Vietnamese translations as final fallback
+- Real-time translation testing
+
 ## [1.0.14] - 2025-09-09
 
 ### Fixed

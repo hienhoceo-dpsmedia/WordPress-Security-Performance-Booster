@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WPSPB_VERSION' ) ) {
-    define( 'WPSPB_VERSION', '1.0.14' );
+    define( 'WPSPB_VERSION', '1.0.15' );
 }
 
 if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
@@ -154,27 +154,83 @@ class WP_Security_Performance_Booster {
     public function load_textdomain() {
         $domain = 'wp-security-performance-booster';
         
-        // Standard WordPress textdomain loading
-        load_plugin_textdomain(
-            $domain,
-            false,
-            dirname( plugin_basename( __FILE__ ) ) . '/../languages'
-        );
+        // Debug logging
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'WPSPB: Loading textdomain...' );
+        }
         
-        // Get settings and apply custom locale if needed
+        // Get settings first
         $settings = $this->get_settings();
+        $locale = 'auto';
+        
         if ( ! empty( $settings['plugin_locale'] ) && 'auto' !== $settings['plugin_locale'] ) {
             $locale = $settings['plugin_locale'];
-            
-            // Unload and reload with specific locale
-            unload_textdomain( $domain );
-            
-            $mofile = plugin_dir_path( __FILE__ ) . '../languages/' . $domain . '-' . $locale . '.mo';
-            if ( file_exists( $mofile ) ) {
-                load_textdomain( $domain, $mofile, $locale );
-            } else {
-                // Fallback to standard loading
-                load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/../languages' );
+        }
+        
+        // Debug logging
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'WPSPB: Selected locale: ' . $locale );
+        }
+        
+        // If auto, use WordPress locale
+        if ( 'auto' === $locale ) {
+            $locale = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
+        }
+        
+        // Force Vietnamese for testing if selected
+        if ( 'vi' === $locale ) {
+            $locale = 'vi_VI'; // Try common Vietnamese locale variants
+        }
+        
+        // Debug logging
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'WPSPB: Final locale: ' . $locale );
+        }
+        
+        // Try multiple approaches to load translations
+        $loaded = false;
+        
+        // Approach 1: Direct file loading
+        $mofile = plugin_dir_path( __FILE__ ) . '../languages/' . $domain . '-' . $locale . '.mo';
+        if ( file_exists( $mofile ) ) {
+            $loaded = load_textdomain( $domain, $mofile, $locale );
+            if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                error_log( 'WPSPB: Direct loading result: ' . ( $loaded ? 'SUCCESS' : 'FAILED' ) );
+                error_log( 'WPSPB: MO file path: ' . $mofile );
+            }
+        }
+        
+        // Approach 2: Standard WordPress loading
+        if ( ! $loaded ) {
+            $loaded = load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/../languages' );
+            if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                error_log( 'WPSPB: Standard loading result: ' . ( $loaded ? 'SUCCESS' : 'FAILED' ) );
+            }
+        }
+        
+        // Approach 3: Try Vietnamese specific
+        if ( ! $loaded && ( 'vi' === $settings['plugin_locale'] || 'vi_VI' === $locale ) ) {
+            // Try Vietnamese file directly
+            $vi_mofile = plugin_dir_path( __FILE__ ) . '../languages/' . $domain . '-vi.mo';
+            if ( file_exists( $vi_mofile ) ) {
+                $loaded = load_textdomain( $domain, $vi_mofile, 'vi' );
+                if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                    error_log( 'WPSPB: Vietnamese specific loading result: ' . ( $loaded ? 'SUCCESS' : 'FAILED' ) );
+                }
+            }
+        }
+        
+        // Test translation
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            $test_string = __( 'Security & Performance Booster', $domain );
+            error_log( 'WPSPB: Test translation result: ' . $test_string );
+        }
+        
+        // Hardcoded fallback for Vietnamese if .mo file doesn't work
+        if ( 'vi' === $settings['plugin_locale'] && ! $loaded ) {
+            add_filter( 'gettext', array( $this, 'vietnamese_fallback' ), 10, 3 );
+            if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                error_log( 'WPSPB: Added Vietnamese fallback filter' );
             }
         }
     }
@@ -401,12 +457,71 @@ class WP_Security_Performance_Booster {
         unload_textdomain( $domain );
         $this->load_textdomain();
     }
+    
+    /**
+     * Hardcoded Vietnamese translation fallback
+     * 
+     * @param string $translation The translated text
+     * @param string $text The original text
+     * @param string $domain The text domain
+     * @return string The translated text
+     */
+    public function vietnamese_fallback( $translation, $text, $domain ) {
+        if ( 'wp-security-performance-booster' !== $domain ) {
+            return $translation;
+        }
+        
+        // Vietnamese translations for common strings
+        $translations = array(
+            'Security & Performance Booster' => 'Tăng Cường Bảo Mật & Hiệu Suất',
+            'Security Booster' => 'Tăng Cường Bảo Mật',
+            'Features' => 'Tính Năng',
+            'Updates' => 'Cập Nhật',
+            'Disable Core Updates' => 'Tắt Cập Nhật Core',
+            'Disable Plugin Updates' => 'Tắt Cập Nhật Plugin',
+            'Disable Theme Updates' => 'Tắt Cập Nhật Theme',
+            'Comments & Discussion' => 'Bình Luận & Thảo Luận',
+            'Disable Comments and Trackbacks' => 'Tắt Bình Luận và Trackback',
+            'Security' => 'Bảo Mật',
+            'Disable XML-RPC' => 'Tắt XML-RPC',
+            'Disable Pingbacks' => 'Tắt Pingback',
+            'Admin Experience' => 'Trải Nghiệm Quản Trị',
+            'Hide Admin Notifications' => 'Ẩn Thông Báo Quản Trị',
+            'Clean Dashboard Widgets' => 'Dọn Dẹp Widget Dashboard',
+            'Language' => 'Ngôn Ngữ',
+            'Plugin Language' => 'Ngôn Ngữ Plugin',
+            'Auto (use site language)' => 'Tự động (sử dụng ngôn ngữ trang web)',
+            'Vietnamese (Tiếng Việt)' => 'Tiếng Việt',
+            'English (US)' => 'Tiếng Anh (US)',
+            'German (Deutsch)' => 'Tiếng Đức (Deutsch)',
+            'French (Français)' => 'Tiếng Pháp (Français)',
+            'Save Changes' => 'Lưu Thay Đổi',
+        );
+        
+        return isset( $translations[ $text ] ) ? $translations[ $text ] : $translation;
+    }
 
     public function render_settings_page() {
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wp-security-performance-booster' ) );
         }
         $settings = $this->get_settings();
+        
+        // Debug information
+        $current_locale = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
+        $test_translation = __( 'Security & Performance Booster', 'wp-security-performance-booster' );
+        ?>
+        
+        <div class="notice notice-info">
+            <h4>🔍 Debug Information:</h4>
+            <p><strong>Selected Language:</strong> <?php echo esc_html( $settings['plugin_locale'] ); ?></p>
+            <p><strong>WordPress Locale:</strong> <?php echo esc_html( $current_locale ); ?></p>
+            <p><strong>Test Translation:</strong> "<?php echo esc_html( $test_translation ); ?>"</p>
+            <p><strong>Expected Vietnamese:</strong> "Tăng Cường Bảo Mật & Hiệu Suất"</p>
+            <p><strong>Translation Working:</strong> <?php echo ( $test_translation !== 'Security & Performance Booster' ) ? '✅ YES' : '❌ NO'; ?></p>
+        </div>
+        
+        <?php
         ?>
         <div class="wrap wpspb-wrap">
             <h1><?php echo esc_html__( 'Security & Performance Booster', 'wp-security-performance-booster' ); ?></h1>
